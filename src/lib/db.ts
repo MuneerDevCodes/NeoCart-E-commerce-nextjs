@@ -3,9 +3,9 @@
 import type { Order, OrderStatus, PlaceOrderInput, Product } from "@/types";
 
 const DATABASE_NAME = "neocart-db";
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 2;
 
-type StoreName = "products" | "orders" | "files";
+type StoreName = "products" | "orders" | "files" | "settings";
 
 type StoredFile = {
   id: string;
@@ -45,6 +45,10 @@ function openDatabase(): Promise<IDBDatabase> {
 
       if (!database.objectStoreNames.contains("files")) {
         database.createObjectStore("files", { keyPath: "id" });
+      }
+
+      if (!database.objectStoreNames.contains("settings")) {
+        database.createObjectStore("settings", { keyPath: "key" });
       }
     };
 
@@ -134,6 +138,57 @@ export function bulkPutProducts(products: Product[]): Promise<void> {
       products.map((product) => requestResult(store.put(product))),
     );
   });
+}
+
+export function seedProductCatalogIfNeeded(
+  products: Product[],
+  version: number,
+): Promise<void> {
+  return openDatabase().then(
+    (database) =>
+      new Promise<void>((resolve, reject) => {
+        const transaction = database.transaction(
+          ["products", "settings"],
+          "readwrite",
+        );
+        const productsStore = transaction.objectStore("products");
+        const settingsStore = transaction.objectStore("settings");
+        let failure: Error | undefined;
+
+        transaction.oncomplete = () => resolve();
+        transaction.onabort = () =>
+          reject(
+            failure ??
+              transaction.error ??
+              new Error("Product catalog seeding was aborted."),
+          );
+        transaction.onerror = () => {
+          failure ??=
+            transaction.error ?? new Error("Product catalog seeding failed.");
+        };
+
+        const versionRequest = settingsStore.get("productCatalogVersion");
+        versionRequest.onsuccess = () => {
+          const savedVersion = versionRequest.result as
+            | { value: number }
+            | undefined;
+          if (savedVersion?.value === version) {
+            return;
+          }
+
+          productsStore.clear();
+          for (const product of products) {
+            productsStore.put(product);
+          }
+          settingsStore.put({ key: "productCatalogVersion", value: version });
+        };
+        versionRequest.onerror = () => {
+          failure =
+            versionRequest.error ??
+            new Error("Unable to read the product catalog version.");
+        };
+      }),
+  );
 }
 
 export function deleteProduct(id: string): Promise<void> {
@@ -455,6 +510,7 @@ export function clearAllDatabaseData(): Promise<void> {
         transaction.objectStore("products").clear();
         transaction.objectStore("orders").clear();
         transaction.objectStore("files").clear();
+        transaction.objectStore("settings").clear();
         transaction.oncomplete = () => resolve();
         transaction.onabort = () =>
           reject(

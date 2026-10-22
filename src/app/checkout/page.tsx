@@ -9,8 +9,9 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { placeOrder } from "@/lib/db";
 import { STORAGE_KEYS } from "@/lib/storage";
 import { useProducts } from "@/hooks/useProducts";
-import type { CustomerDetails, Product } from "@/types";
 import { getProductImageUrl } from "@/lib/productImage";
+import type { CustomerDetails, Product } from "@/types";
+
 
 const FREE_SHIPPING_THRESHOLD = 75;
 const STANDARD_SHIPPING = 6.99;

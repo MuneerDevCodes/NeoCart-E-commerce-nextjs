@@ -1,5 +1,6 @@
 export type Product = {
   id: string;
+  sku: string;
   name: string;
   description: string;
   price: number;
@@ -9,6 +10,9 @@ export type Product = {
   stock: number;
   featured: boolean;
   imageUrl: string;
+  image_url: string;
+  image_source_url: string;
+  image_credit: string;
   fileId?: string;
   createdAt: number;
 };

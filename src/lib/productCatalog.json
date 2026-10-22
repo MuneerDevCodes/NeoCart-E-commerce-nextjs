@@ -1,0 +1,502 @@
+[
+  {
+    "sku": "EL-01",
+    "category": "Electronics",
+    "name": "Wireless Headphones",
+    "price": 199.99,
+    "description": "Full-size wireless headphones with a comfortable over-ear fit, built for long listening sessions.",
+    "image_url": "https://images.unsplash.com/photo-1528017486352-b49206ec821b?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/grayscale-photography-of-full-size-wireless-headphones-on-textile-ZGL0DS7Z5Mw",
+    "image_credit": "John Su / Unsplash"
+  },
+  {
+    "sku": "EL-02",
+    "category": "Electronics",
+    "name": "Smartwatch",
+    "price": 329.99,
+    "description": "Aluminum-case smartwatch for notifications, fitness tracking and everyday wear.",
+    "image_url": "https://images.unsplash.com/photo-1557045136-50ed3874553c?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/aluminum-case-apple-watch-GfkPMYR4yBw",
+    "image_credit": "Kamil Switalski / Unsplash"
+  },
+  {
+    "sku": "EL-03",
+    "category": "Electronics",
+    "name": "Silver Laptop",
+    "price": 899.99,
+    "description": "Slim silver laptop for work, study and entertainment.",
+    "image_url": "https://images.unsplash.com/photo-1600194990375-5d1d0b28781c?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/silver-hp-laptop-computer-on-white-table-PnkX_rp53SE",
+    "image_credit": "Windows / Unsplash"
+  },
+  {
+    "sku": "EL-04",
+    "category": "Electronics",
+    "name": "Smartphone",
+    "price": 799.99,
+    "description": "White smartphone with a multi-lens camera array on the back.",
+    "image_url": "https://images.unsplash.com/photo-1756517313520-c6c25364ce65?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/white-smartphone-with-google-logo-and-camera-array-O6Or-El4hdU",
+    "image_credit": "Samuel Angor / Unsplash"
+  },
+  {
+    "sku": "EL-05",
+    "category": "Electronics",
+    "name": "Portable Bluetooth Speaker",
+    "price": 129.99,
+    "description": "Compact black portable speaker with clear sound for home and travel.",
+    "image_url": "https://images.unsplash.com/photo-1549400854-b4300f444934?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/black-portable-speaker-eeEsmrTVH7Q",
+    "image_credit": "Ryan Waring / Unsplash"
+  },
+  {
+    "sku": "EL-06",
+    "category": "Electronics",
+    "name": "Mechanical Keyboard",
+    "price": 109.99,
+    "description": "Mechanical keyboard with red backlit keys for gaming and typing.",
+    "image_url": "https://images.unsplash.com/photo-1756387462457-9afa97d2dbe8?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/close-up-of-a-mechanical-keyboard-with-red-lighting-fCg_a2fYgcs",
+    "image_credit": "Gavin Phillips / Unsplash"
+  },
+  {
+    "sku": "EL-07",
+    "category": "Electronics",
+    "name": "Wireless Mouse",
+    "price": 49.99,
+    "description": "Red and black wireless computer mouse with a comfortable grip.",
+    "image_url": "https://images.unsplash.com/photo-1585816517178-2398c69d12c6?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/red-and-black-wireless-computer-mouse-w2UMHNScBLc",
+    "image_credit": "Marija Zaric / Unsplash"
+  },
+  {
+    "sku": "EL-08",
+    "category": "Electronics",
+    "name": "Digital Camera",
+    "price": 649.99,
+    "description": "Digital camera for photography enthusiasts, shown with a yellow cord attached.",
+    "image_url": "https://images.unsplash.com/photo-1684605345476-29d963cec465?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-camera-with-a-yellow-cord-attached-to-it-ErbcPR6StBk",
+    "image_credit": "Andy Holmes / Unsplash"
+  },
+  {
+    "sku": "EL-09",
+    "category": "Electronics",
+    "name": "Silver Tablet",
+    "price": 449.99,
+    "description": "Silver tablet for reading, drawing and streaming. Photo also shows a phone and stylus.",
+    "image_url": "https://images.unsplash.com/photo-1601836211377-4112e1c147ee?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/silver-ipad-on-white-table-0FMt-Hw5z3k",
+    "image_credit": "Miguel Tomás / Unsplash"
+  },
+  {
+    "sku": "EL-10",
+    "category": "Electronics",
+    "name": "Power Bank",
+    "price": 39.99,
+    "description": "Portable black and purple power bank for charging phones on the go.",
+    "image_url": "https://images.unsplash.com/photo-1604160687800-f7799a525a33?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/black-and-purple-power-bank-Ofx43JYZgBo",
+    "image_credit": "Martin Sanchez / Unsplash"
+  },
+  {
+    "sku": "FA-01",
+    "category": "Fashion",
+    "name": "White Low-Top Sneakers",
+    "price": 109.99,
+    "description": "Classic white low-top sneakers for everyday casual wear.",
+    "image_url": "https://images.unsplash.com/photo-1579338908476-3a3a1d71a706?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/pair-of-white-nike-low-top-shoes-bySPt2lySzg",
+    "image_credit": "Ryan Plomp / Unsplash"
+  },
+  {
+    "sku": "FA-02",
+    "category": "Fashion",
+    "name": "Brown Leather Handbag",
+    "price": 149.99,
+    "description": "Brown leather handbag with a structured shape for daily use.",
+    "image_url": "https://images.unsplash.com/photo-1612902456551-333ac5afa26e?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/brown-leather-handbag-on-white-table-2bPimrz-Lgo",
+    "image_credit": "Farah Samy / Unsplash"
+  },
+  {
+    "sku": "FA-03",
+    "category": "Fashion",
+    "name": "Aviator Sunglasses",
+    "price": 39.99,
+    "description": "Lavender-tinted aviator sunglasses with a rose gold frame.",
+    "image_url": "https://images.unsplash.com/photo-1747731141445-7656d7467969?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/purple-aviator-sunglasses-are-placed-on-a-white-surface-vyioP91iSC8",
+    "image_credit": "ZEELOOL Glasses / Unsplash"
+  },
+  {
+    "sku": "FA-04",
+    "category": "Fashion",
+    "name": "Blue Denim Jacket",
+    "price": 79.99,
+    "description": "Women's blue denim jacket, a layering staple for every season.",
+    "image_url": "https://images.unsplash.com/photo-1575752229768-116115c80c8f?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/womens-blue-denim-jacket-h6ajwqvCKsY",
+    "image_credit": "Chermiti Mohamed / Unsplash"
+  },
+  {
+    "sku": "FA-05",
+    "category": "Fashion",
+    "name": "Gold & Black Analog Wristwatch",
+    "price": 189.99,
+    "description": "Men's round analog mechanical wristwatch in gold and black.",
+    "image_url": "https://images.unsplash.com/photo-1623998021450-85c29c644e0d?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/gold-and-black-round-analog-watch-brqTWpFkmSQ",
+    "image_credit": "Saif71.com / Unsplash"
+  },
+  {
+    "sku": "FA-06",
+    "category": "Fashion",
+    "name": "Brown Leather Backpack",
+    "price": 119.99,
+    "description": "Brown leather backpack for commuting, school and travel.",
+    "image_url": "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/brown-leather-backpack-on-white-surface-3o-X8WJOP5E",
+    "image_credit": "Wiser by the Mile / Unsplash"
+  },
+  {
+    "sku": "FA-07",
+    "category": "Fashion",
+    "name": "Brown Leather Lace-Up Boots",
+    "price": 139.99,
+    "description": "Durable brown leather lace-up boots.",
+    "image_url": "https://images.unsplash.com/photo-1606036525923-525fa3b35465?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/brown-leather-lace-up-boots-s8TQiOfGlz0",
+    "image_credit": "Glenn Carstens-Peters / Unsplash"
+  },
+  {
+    "sku": "FA-08",
+    "category": "Fashion",
+    "name": "White Crew Neck T-Shirt",
+    "price": 24.99,
+    "description": "Plain white crew neck t-shirt in soft cotton.",
+    "image_url": "https://images.unsplash.com/photo-1616006897093-5e4635c0de35?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/woman-in-white-crew-neck-t-shirt-FTrGeAy0RW4",
+    "image_credit": "The Graphic Space / Unsplash"
+  },
+  {
+    "sku": "FA-09",
+    "category": "Fashion",
+    "name": "Colorful Scarves",
+    "price": 29.99,
+    "description": "Lightweight scarves in blue, pink, white and red.",
+    "image_url": "https://images.unsplash.com/photo-1744161116428-5ba8e96c8ee2?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/colorful-scarves-hung-outside-on-a-sunny-day-avXyYKYcLOg",
+    "image_credit": "Yerin SEO / Unsplash"
+  },
+  {
+    "sku": "FA-10",
+    "category": "Fashion",
+    "name": "Black Leather Belt",
+    "price": 29.99,
+    "description": "Classic black leather belt for casual and formal outfits.",
+    "image_url": "https://images.unsplash.com/photo-1580053852056-f3992ab1e5e5?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/black-leather-belt-on-white-wooden-shelf-ebNa1XKQX_8",
+    "image_credit": "Robert Laursoo / Unsplash"
+  },
+  {
+    "sku": "HO-01",
+    "category": "Home",
+    "name": "White & Red Table Lamp",
+    "price": 39.99,
+    "description": "Modern white and red table lamp for desks and bedside tables.",
+    "image_url": "https://images.unsplash.com/photo-1605194004886-56d82f482d53?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/white-and-red-table-lamp-qdJfBhmmv3E",
+    "image_credit": "George Bakos / Unsplash"
+  },
+  {
+    "sku": "HO-02",
+    "category": "Home",
+    "name": "White Ceramic Vase",
+    "price": 29.99,
+    "description": "White ceramic vase for fresh or dried flower arrangements.",
+    "image_url": "https://images.unsplash.com/photo-1602470842433-da5d093a694f?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/red-and-green-flower-in-white-ceramic-vase-1DpjkQAyK-k",
+    "image_credit": "cestsibon / Unsplash"
+  },
+  {
+    "sku": "HO-03",
+    "category": "Home",
+    "name": "Glass Tea Light Candle",
+    "price": 14.99,
+    "description": "Tea light candle in a glass holder for a warm, cozy ambience.",
+    "image_url": "https://images.unsplash.com/photo-1761162211100-f579e435452a?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-lit-candle-in-a-glass-holder-at-night-t366VyHaXjk",
+    "image_credit": "Alexandr Popadin / Unsplash"
+  },
+  {
+    "sku": "HO-04",
+    "category": "Home",
+    "name": "Coffee Maker",
+    "price": 59.99,
+    "description": "Dark and metallic coffee machine for brewing at home.",
+    "image_url": "https://images.unsplash.com/photo-1607273177147-e7304c4d5d6c?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/black-and-silver-coffee-maker-on-brown-wooden-table-ioVRpz0gX5w",
+    "image_credit": "Nathan Dumlao / Unsplash"
+  },
+  {
+    "sku": "HO-05",
+    "category": "Home",
+    "name": "White Analog Wall Clock",
+    "price": 24.99,
+    "description": "White analog wall clock with a white wooden frame.",
+    "image_url": "https://images.unsplash.com/photo-1547306720-c3550ecab8b7?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/white-analog-wall-clock-with-white-wooden-frame-agJcKpk4XYc",
+    "image_credit": "Christin Hume / Unsplash"
+  },
+  {
+    "sku": "HO-06",
+    "category": "Home",
+    "name": "Blue Ceramic Plant Pot",
+    "price": 27.99,
+    "description": "Glossy blue ceramic pot for indoor plants.",
+    "image_url": "https://images.unsplash.com/photo-1753967825586-e9af49bcfac6?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-green-plant-in-a-blue-ceramic-pot-KMBqI30QT24",
+    "image_credit": "Tadhg McInerney / Unsplash"
+  },
+  {
+    "sku": "HO-07",
+    "category": "Home",
+    "name": "Wooden Nightstand",
+    "price": 89.99,
+    "description": "Warm wooden nightstand for the bedroom. Photo also shows a lamp and bedding.",
+    "image_url": "https://images.unsplash.com/photo-1618941027499-790b098c04b3?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/white-table-lamp-on-brown-wooden-drawer-LBF83MEwQyY",
+    "image_credit": "Tina Witherspoon / Unsplash"
+  },
+  {
+    "sku": "HO-08",
+    "category": "Home",
+    "name": "Knitted Blanket Set",
+    "price": 44.99,
+    "description": "Stack of three soft knitted blankets for the sofa or bed.",
+    "image_url": "https://images.unsplash.com/photo-1731399211410-e3ffe1560310?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-stack-of-three-knitted-blankets-sitting-on-top-of-each-other-694K2AhsFLA",
+    "image_credit": "Anna Evans / Unsplash"
+  },
+  {
+    "sku": "HO-09",
+    "category": "Home",
+    "name": "Green Throw Pillow",
+    "price": 19.99,
+    "description": "Soft green throw pillow for couches and chairs.",
+    "image_url": "https://images.unsplash.com/photo-1599421988142-c9bec206bdd8?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/green-throw-pillow-on-white-couch-nzyQEhd2GIc",
+    "image_credit": "Christina / Unsplash"
+  },
+  {
+    "sku": "HO-10",
+    "category": "Home",
+    "name": "White Ceramic Storage Jar Set",
+    "price": 32.99,
+    "description": "Set of three white handmade ceramic jars for kitchen or bathroom storage.",
+    "image_url": "https://images.unsplash.com/photo-1631125915973-e0d155a14e4e?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/3-white-ceramic-jars-on-white-table-rAVSjxz6mNo",
+    "image_credit": "Yana Hurska / Unsplash"
+  },
+  {
+    "sku": "SP-01",
+    "category": "Sports",
+    "name": "Black Running Shoe",
+    "price": 119.99,
+    "description": "Black running shoe with cushioned sole for training and road runs.",
+    "image_url": "https://images.unsplash.com/photo-1567069041071-bab3e18d72f0?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/unpaired-black-nike-huarache-running-shoe-with-box-FvURQ4dmNFk",
+    "image_credit": "Nik / Unsplash"
+  },
+  {
+    "sku": "SP-02",
+    "category": "Sports",
+    "name": "Yoga Mat with Blocks",
+    "price": 29.99,
+    "description": "Non-slip yoga mat shown with two yoga blocks.",
+    "image_url": "https://images.unsplash.com/photo-1646239646963-b0b9be56d6b5?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-yoga-mat-with-two-blocks-on-top-of-it-b8Q5fHBsyik",
+    "image_credit": "Samantha Sheppard / Unsplash"
+  },
+  {
+    "sku": "SP-03",
+    "category": "Sports",
+    "name": "Gray Dumbbells",
+    "price": 39.99,
+    "description": "Pair of gray metal dumbbells for strength training.",
+    "image_url": "https://images.unsplash.com/photo-1493690283958-32df2c86326e?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/two-gray-dumbbells-TsVN31Dzyv4",
+    "image_credit": "Cyril Saulnier / Unsplash"
+  },
+  {
+    "sku": "SP-04",
+    "category": "Sports",
+    "name": "Soccer Ball",
+    "price": 24.99,
+    "description": "White, orange and black soccer ball for training and matches.",
+    "image_url": "https://images.unsplash.com/photo-1505391610862-c63dde65ae97?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/white-orange-and-black-soccer-ball-on-field-z1gNxguQblg",
+    "image_credit": "Andy Hall / Unsplash"
+  },
+  {
+    "sku": "SP-05",
+    "category": "Sports",
+    "name": "Basketball",
+    "price": 29.99,
+    "description": "Classic brown and black basketball with a grippy textured surface.",
+    "image_url": "https://images.unsplash.com/photo-1627627256672-027a4613d028?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/brown-and-black-basketball-ball-BfaBLVCBTI8",
+    "image_credit": "Kylie Osullivan / Unsplash"
+  },
+  {
+    "sku": "SP-06",
+    "category": "Sports",
+    "name": "Racket and Ball Set",
+    "price": 89.99,
+    "description": "Racket with balls for racket-sport practice. Listed on Unsplash under tennis racket and ping pong tags.",
+    "image_url": "https://images.unsplash.com/photo-1669139185686-5e0b2355a104?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-racket-and-balls-on-a-table-OArzVT7Xt_E",
+    "image_credit": "Swanky Fella / Unsplash"
+  },
+  {
+    "sku": "SP-07",
+    "category": "Sports",
+    "name": "Full-Face Mountain Bike Helmet",
+    "price": 79.99,
+    "description": "Downhill-style full-face cycling helmet, shown with goggles.",
+    "image_url": "https://images.unsplash.com/photo-1701522814501-1b548c320d5a?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-helmet-and-goggles-are-shown-in-the-dark-KeXLatlpaoo",
+    "image_credit": "Jan Kopřiva / Unsplash"
+  },
+  {
+    "sku": "SP-08",
+    "category": "Sports",
+    "name": "Black Boxing Gloves",
+    "price": 44.99,
+    "description": "Pair of black boxing gloves for bag work and sparring.",
+    "image_url": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/pair-of-black-boxing-gloves-XmvuWRDimrg",
+    "image_credit": "Bogdan Yukhymchuk / Unsplash"
+  },
+  {
+    "sku": "SP-09",
+    "category": "Sports",
+    "name": "Jump Rope",
+    "price": 12.99,
+    "description": "Skipping rope for cardio and conditioning workouts. Photo shows it in use at a gym.",
+    "image_url": "https://images.unsplash.com/photo-1514994667787-b48ca37155f0?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/woman-using-jumping-rope-7QYd1VxLRbM",
+    "image_credit": "Element5 Digital / Unsplash"
+  },
+  {
+    "sku": "SP-10",
+    "category": "Sports",
+    "name": "Glass Water Bottles",
+    "price": 19.99,
+    "description": "Reusable glass water bottles for the gym, office or home.",
+    "image_url": "https://images.unsplash.com/photo-1720468750651-71bf110a05e5?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-group-of-four-water-bottles-sitting-on-top-of-a-table-NEfnQu_yz_g",
+    "image_credit": "Stephanie Sarlos / Unsplash"
+  },
+  {
+    "sku": "BE-01",
+    "category": "Beauty",
+    "name": "Soft Pink Lipstick",
+    "price": 24.99,
+    "description": "Soft pink lipstick with a smooth, creamy finish.",
+    "image_url": "https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/NnsqpLjiA94",
+    "image_credit": "Evangeline Sarney / Unsplash"
+  },
+  {
+    "sku": "BE-02",
+    "category": "Beauty",
+    "name": "Glass Perfume Bottle",
+    "price": 89,
+    "description": "Elegant clear glass perfume bottle for a signature fragrance.",
+    "image_url": "https://images.unsplash.com/photo-1608721279136-cd41b752fa41?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/clear-glass-perfume-bottle-with-pink-light-zvqq7CG8BwY",
+    "image_credit": "JC Media / Unsplash"
+  },
+  {
+    "sku": "BE-03",
+    "category": "Beauty",
+    "name": "Retinol Face Serum",
+    "price": 34.99,
+    "description": "Amber glass dropper bottle of retinol serum for a daily skincare routine.",
+    "image_url": "https://images.unsplash.com/photo-1773700596401-61bc77e0b436?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/brown-glass-bottle-of-retinol-serum-on-shelf-LeWrouH2qto",
+    "image_credit": "Ela De Pure / Unsplash"
+  },
+  {
+    "sku": "BE-04",
+    "category": "Beauty",
+    "name": "Makeup Brush Set",
+    "price": 29.99,
+    "description": "Set of soft makeup brushes in pink and brown tones.",
+    "image_url": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/pink-and-brown-makeup-brush-set-xwM61TPMlYk",
+    "image_credit": "Shamblen Studios / Unsplash"
+  },
+  {
+    "sku": "BE-05",
+    "category": "Beauty",
+    "name": "Nail Polish Collection",
+    "price": 27.99,
+    "description": "Collection of seven nail polish bottles in assorted shades.",
+    "image_url": "https://images.unsplash.com/photo-1512207046665-7592bb0ce5e6?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/seven-nail-polish-bottles-MUVKrHNMvoQ",
+    "image_credit": "Annie Spratt / Unsplash"
+  },
+  {
+    "sku": "BE-06",
+    "category": "Beauty",
+    "name": "Skincare Cream & Serum Set",
+    "price": 39.99,
+    "description": "Skincare set with a face cream jar, serum bottle and sheet mask.",
+    "image_url": "https://images.unsplash.com/photo-1552046122-03184de85e08?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/skincare-products-with-cream-and-mask-GLl6_-L3fxM",
+    "image_credit": "Toa Heftiba / Unsplash"
+  },
+  {
+    "sku": "BE-07",
+    "category": "Beauty",
+    "name": "Eyeshadow Palette",
+    "price": 32,
+    "description": "White and brown eyeshadow palette with blendable neutral shades.",
+    "image_url": "https://images.unsplash.com/photo-1583931537180-7d26921260e4?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/white-and-brown-eyeshadow-palette-5Us84s7blq8",
+    "image_credit": "marianela / Unsplash"
+  },
+  {
+    "sku": "BE-08",
+    "category": "Beauty",
+    "name": "Black Hair Dryer",
+    "price": 59.99,
+    "description": "Black hair dryer for fast drying and styling.",
+    "image_url": "https://images.unsplash.com/photo-1620331309205-b5a4669ac526?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/black-hair-dryer-on-white-and-green-textile-MGt5tcLebds",
+    "image_credit": "Andrea Donato / Unsplash"
+  },
+  {
+    "sku": "BE-09",
+    "category": "Beauty",
+    "name": "Shampoo Bottle",
+    "price": 6.99,
+    "description": "Everyday shampoo for clean, soft hair.",
+    "image_url": "https://images.unsplash.com/photo-1597746809107-db44ed053e11?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/pantene-pro-v-shampoo-bottle-sLJStGA-Ys0",
+    "image_credit": "Milad Shams / Unsplash"
+  },
+  {
+    "sku": "BE-10",
+    "category": "Beauty",
+    "name": "Gel Facial Cleanser",
+    "price": 14.99,
+    "description": "Gentle gel facial cleanser tube for daily face washing.",
+    "image_url": "https://images.unsplash.com/photo-1739131285874-8d545cffef95?auto=format&fit=crop&w=800&q=80",
+    "image_source_url": "https://unsplash.com/photos/a-tube-of-gel-facial-cleanser-next-to-a-white-sculpture-PvTvVFsh2tk",
+    "image_credit": "Ela De Pure / Unsplash"
+  }
+]

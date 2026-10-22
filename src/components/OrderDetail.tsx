@@ -6,6 +6,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cancelOrder, getOrder } from "@/lib/db";
 import { getProductImageUrl } from "@/lib/productImage";
+
 import type { Order, OrderStatus } from "@/types";
 
 const statusStyles: Record<OrderStatus, string> = {

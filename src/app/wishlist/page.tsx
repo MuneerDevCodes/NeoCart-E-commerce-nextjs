@@ -7,6 +7,7 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useProducts } from "@/hooks/useProducts";
 import { getProductImageUrl } from "@/lib/productImage";
+
 import type { Product } from "@/types";
 
 function WishlistSkeleton() {

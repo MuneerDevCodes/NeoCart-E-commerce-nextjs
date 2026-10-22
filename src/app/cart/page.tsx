@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useProducts } from "@/hooks/useProducts";
 import { getProductImageUrl } from "@/lib/productImage";
+
 import type { Product } from "@/types";
 
 const FREE_SHIPPING_THRESHOLD = 75;

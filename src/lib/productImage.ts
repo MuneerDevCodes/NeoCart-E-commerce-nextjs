@@ -3,7 +3,10 @@ type ProductImageSource = {
   imageUrl?: string | null;
 };
 
-export function getProductImageUrl({ id, imageUrl }: ProductImageSource): string {
+export function getProductImageUrl({
+  id,
+  imageUrl,
+}: ProductImageSource): string {
   const savedUrl = imageUrl?.trim();
   if (savedUrl) {
     return savedUrl;

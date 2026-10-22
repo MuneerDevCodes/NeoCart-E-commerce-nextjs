@@ -28,6 +28,10 @@ Verify changes with `npm run lint` and `npm run build`.
 | Preferences | `localStorage` | Theme and product display mode |
 | Recently viewed | `localStorage` | Up to eight product IDs |
 | Shipping details | `localStorage` | Saved only when checkout consent is selected |
-| Products | IndexedDB (`neocart-db`, `products`) | Seeded catalog and current stock |
+| Products | IndexedDB (`neocart-db`, `products`) | 50 products imported from `public/productfile.md` (10 per category), keyed by SKU, with current stock |
 | Orders | IndexedDB (`neocart-db`, `orders`) | Order and item snapshots |
 | Files | IndexedDB (`neocart-db`, `files`) | Local file records |
+
+The product catalog preserves each product's SKU, category, name, price,
+description, image URL, image source page, and photo credit. Catalog updates
+are versioned and applied once without duplicating products on later visits.

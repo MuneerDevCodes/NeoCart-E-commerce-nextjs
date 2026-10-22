@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { getAllProducts, getProduct } from "@/lib/db";
-import { seedProductsIfEmpty } from "@/lib/seed";
+import { seedProductCatalog } from "@/lib/seed";
 import type { Product } from "@/types";
 
 export function useProducts() {
@@ -20,7 +20,7 @@ export function useProducts() {
   useEffect(() => {
     let active = true;
 
-    void seedProductsIfEmpty()
+    void seedProductCatalog()
       .then(getAllProducts)
       .then((loadedProducts) => {
         if (active) {
@@ -64,7 +64,7 @@ export function useProduct(id: string) {
   useEffect(() => {
     let active = true;
 
-    void seedProductsIfEmpty()
+    void seedProductCatalog()
       .then(() => getProduct(id))
       .then((loadedProduct) => {
         if (active) {

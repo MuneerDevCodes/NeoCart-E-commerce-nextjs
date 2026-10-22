@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { seedProductsIfEmpty } from "@/lib/seed";
+import { seedProductCatalog } from "@/lib/seed";
 
 export default function ProductCatalogInitializer() {
   const [error, setError] = useState(false);
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    void seedProductsIfEmpty().catch(() => {
+    void seedProductCatalog().catch(() => {
       setError(true);
     });
   }, [attempt]);
