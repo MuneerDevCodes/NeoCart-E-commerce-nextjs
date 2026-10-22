@@ -49,6 +49,14 @@ export default function HomePage() {
   const { recentlyViewed, isReady: recentReady } = useRecentlyViewed();
   const categories = [...new Set(products.map((product) => product.category))];
   const featuredProducts = products.filter((product) => product.featured);
+  const homepageProducts =
+    featuredProducts.length > 0
+      ? featuredProducts
+      : categories
+          .map((category) =>
+            products.find((product) => product.category === category),
+          )
+          .filter((product) => product !== undefined);
   const recentlyViewedProducts = recentReady
     ? recentlyViewed
         .map((id) => products.find((product) => product.id === id))
@@ -197,8 +205,8 @@ export default function HomePage() {
                     Try again
                   </button>
                 </div>
-              ) : featuredProducts.length > 0 ? (
-                featuredProducts.map((product) => (
+              ) : homepageProducts.length > 0 ? (
+                homepageProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))
               ) : (
