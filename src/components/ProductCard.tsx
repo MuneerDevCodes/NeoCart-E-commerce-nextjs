@@ -7,7 +7,13 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import type { Product } from "@/types";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+  layout = "grid",
+}: {
+  product: Product;
+  layout?: "grid" | "list";
+}) {
   const { addItem, isReady: cartReady } = useCart();
   const {
     isWishlisted,
@@ -33,8 +39,18 @@ export default function ProductCard({ product }: { product: Product }) {
   }
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
-      <div className="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
+    <article
+      className={`group flex h-full overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 ${
+        layout === "list" ? "flex-row" : "flex-col"
+      }`}
+    >
+      <div
+        className={`relative overflow-hidden bg-slate-100 dark:bg-slate-800 ${
+          layout === "list"
+            ? "w-28 shrink-0 sm:w-44"
+            : "aspect-square"
+        }`}
+      >
         <Link
           aria-label={`View ${product.name}`}
           className="absolute inset-0"
