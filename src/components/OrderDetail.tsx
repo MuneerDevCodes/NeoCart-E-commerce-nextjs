@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cancelOrder, getOrder } from "@/lib/db";
+import { getProductImageUrl } from "@/lib/productImage";
 import type { Order, OrderStatus } from "@/types";
 
 const statusStyles: Record<OrderStatus, string> = {
@@ -44,8 +45,7 @@ export default function OrderDetail() {
         }
         setOrder(loadedOrder);
       })
-      .catch((loadError: unknown) => {
-        console.error(`Unable to load order "${id}".`, loadError);
+      .catch(() => {
         if (active) {
           setError("Order details could not be loaded. Please try again.");
         }
@@ -68,7 +68,6 @@ export default function OrderDetail() {
       const cancelledOrder = await cancelOrder(id);
       setOrder(cancelledOrder);
     } catch (cancelFailure) {
-      console.error(`Unable to cancel order "${id}".`, cancelFailure);
       setCancelError(
         cancelFailure instanceof Error
           ? cancelFailure.message
@@ -178,18 +177,19 @@ export default function OrderDetail() {
                   className="flex flex-wrap items-center gap-4 py-4 first:pt-0 last:pb-0"
                   key={`${item.productId}-${index}`}
                 >
-                  {item.image && (
-                    <div className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
-                      <Image
-                        alt=""
-                        className="h-full w-full object-cover"
-                        height={160}
-                        src={item.image}
-                        unoptimized
-                        width={160}
-                      />
-                    </div>
-                  )}
+                  <div className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+                    <Image
+                      alt=""
+                      className="h-full w-full object-cover"
+                      height={160}
+                      sizes="64px"
+                      src={getProductImageUrl({
+                        id: item.productId,
+                        imageUrl: item.image,
+                      })}
+                      width={160}
+                    />
+                  </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold text-slate-900 dark:text-white">
                       {item.name}

@@ -1,5 +1,6 @@
 import type { Product } from "@/types";
 import { bulkPutProducts, getAllProducts } from "@/lib/db";
+import { getProductImageUrl } from "@/lib/productImage";
 
 const catalogCreatedAt = new Date("2026-01-15T12:00:00.000Z").getTime();
 
@@ -281,6 +282,19 @@ export function seedProductsIfEmpty(): Promise<void> {
       .then((products) => {
         if (products.length === 0) {
           return bulkPutProducts(seedProducts);
+        }
+
+        const productsNeedingImages = products.filter(
+          (product) =>
+            typeof product.imageUrl !== "string" || !product.imageUrl.trim(),
+        );
+        if (productsNeedingImages.length > 0) {
+          return bulkPutProducts(
+            productsNeedingImages.map((product) => ({
+              ...product,
+              imageUrl: getProductImageUrl(product),
+            })),
+          );
         }
       })
       .catch((error: unknown) => {

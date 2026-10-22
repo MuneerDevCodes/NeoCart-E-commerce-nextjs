@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { getProductImageUrl } from "@/lib/productImage";
 import type { Product } from "@/types";
 
 export default function ProductCard({
@@ -30,8 +31,7 @@ export default function ProductCard({
     try {
       await addItem(product.id);
       setMessage("Added to cart");
-    } catch (error) {
-      console.error("Unable to add product to cart.", error);
+    } catch {
       setMessage("Could not add this item");
     } finally {
       setAdding(false);
@@ -62,8 +62,12 @@ export default function ProductCard({
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
             height={800}
             loading="lazy"
-            src={product.imageUrl}
-            unoptimized
+            sizes={
+              layout === "list"
+                ? "(min-width: 640px) 176px, 112px"
+                : "(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+            }
+            src={getProductImageUrl(product)}
             width={800}
           />
         </Link>

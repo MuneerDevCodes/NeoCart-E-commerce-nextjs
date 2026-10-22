@@ -45,8 +45,7 @@ export default function OrdersPage() {
           setOrders(loadedOrders);
         }
       })
-      .catch((loadError: unknown) => {
-        console.error("Unable to load order history.", loadError);
+      .catch(() => {
         if (active) {
           setError("Order history could not be loaded. Please refresh to try again.");
         }

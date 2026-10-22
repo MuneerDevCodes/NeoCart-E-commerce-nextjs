@@ -5,6 +5,7 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
 import { useProducts } from "@/hooks/useProducts";
+import { getProductImageUrl } from "@/lib/productImage";
 
 function ProductCardSkeleton() {
   return (
@@ -44,7 +45,7 @@ function SectionHeading({
 }
 
 export default function HomePage() {
-  const { products, loading } = useProducts();
+  const { products, loading, error, retry } = useProducts();
   const { recentlyViewed, isReady: recentReady } = useRecentlyViewed();
   const categories = [...new Set(products.map((product) => product.category))];
   const featuredProducts = products.filter((product) => product.featured);
@@ -83,14 +84,14 @@ export default function HomePage() {
           className="pointer-events-none absolute bottom-0 right-0 hidden h-full w-[38%] items-end justify-center sm:flex"
         >
           <div className="mb-[-15%] mr-[-10%] aspect-square w-[90%] rotate-6 rounded-[3rem] border border-white/15 bg-white/5 p-5">
-            {products[0] && (
+            {products[0]?.imageUrl && (
               <Image
                 alt=""
                 className="h-full w-full rounded-[2.25rem] object-cover opacity-90"
                 height={800}
                 priority
-                src={products[0].imageUrl}
-                unoptimized
+                sizes="(min-width: 1024px) 34vw, 0px"
+                src={getProductImageUrl(products[0])}
                 width={800}
               />
             )}
@@ -113,6 +114,20 @@ export default function HomePage() {
               />
             ))}
           </div>
+        ) : error ? (
+          <div
+            className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-center dark:border-rose-900 dark:bg-rose-950/40"
+            role="alert"
+          >
+            <p className="text-sm text-rose-800 dark:text-rose-300">{error}</p>
+            <button
+              className="mt-3 font-semibold text-rose-900 underline dark:text-rose-200"
+              onClick={retry}
+              type="button"
+            >
+              Try again
+            </button>
+          </div>
         ) : (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {categories.map((category) => {
@@ -133,8 +148,8 @@ export default function HomePage() {
                     alt=""
                     className="absolute inset-0 -z-10 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     height={600}
-                    src={categoryProduct.imageUrl}
-                    unoptimized
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                    src={getProductImageUrl(categoryProduct)}
                     width={800}
                   />
                   <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent" />
@@ -168,9 +183,29 @@ export default function HomePage() {
             ? Array.from({ length: 4 }, (_, index) => (
                 <ProductCardSkeleton key={index} />
               ))
-            : featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+              : error ? (
+                <div
+                  className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-300 sm:col-span-2 lg:col-span-3 xl:col-span-4"
+                  role="alert"
+                >
+                  Featured products could not be loaded.{" "}
+                  <button
+                    className="font-semibold underline"
+                    onClick={retry}
+                    type="button"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : featuredProducts.length > 0 ? (
+                featuredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))
+              ) : (
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  No featured products are available right now.
+                </p>
+              )}
         </div>
       </section>
 

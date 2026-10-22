@@ -1,5 +1,10 @@
+﻿import type { Metadata } from "next";
 import { Suspense } from "react";
 import ProductsListing from "@/components/ProductsListing";
+
+export const metadata: Metadata = {
+  title: "Shop all products | NeoCart",
+};
 
 function ProductsPageSkeleton() {
   return (

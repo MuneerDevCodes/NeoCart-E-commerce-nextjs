@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useProducts } from "@/hooks/useProducts";
+import { getProductImageUrl } from "@/lib/productImage";
 import type { Product } from "@/types";
 
 function WishlistSkeleton() {
@@ -29,7 +30,7 @@ function WishlistSkeleton() {
 
 export default function WishlistPage() {
   const { wishlist, toggleWishlist, isReady: wishlistReady } = useWishlist();
-  const { products, loading } = useProducts();
+  const { products, loading, error, retry } = useProducts();
   const { addItem, isReady: cartReady } = useCart();
   const [movingId, setMovingId] = useState<string>();
   const [message, setMessage] = useState("");
@@ -49,8 +50,7 @@ export default function WishlistPage() {
       await addItem(product.id);
       toggleWishlist(product.id);
       setMessage(`${product.name} moved to your cart.`);
-    } catch (error) {
-      console.error("Unable to move wishlist product to cart.", error);
+    } catch {
       setMessage(`Could not add ${product.name} to the cart. Please try again.`);
     } finally {
       setMovingId(undefined);
@@ -63,6 +63,27 @@ export default function WishlistPage() {
         <div className="h-10 w-56 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
         <WishlistSkeleton />
       </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <section
+        className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-center dark:border-rose-900 dark:bg-rose-950/40"
+        role="alert"
+      >
+        <h1 className="text-xl font-bold text-rose-900 dark:text-rose-200">
+          Wishlist products could not be loaded
+        </h1>
+        <p className="mt-2 text-sm text-rose-800 dark:text-rose-300">{error}</p>
+        <button
+          className="mt-4 rounded-lg bg-rose-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700"
+          onClick={retry}
+          type="button"
+        >
+          Try again
+        </button>
+      </section>
     );
   }
 
@@ -134,7 +155,7 @@ export default function WishlistPage() {
       )}
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {wishedProducts.map((product) => (
+        {wishedProducts.map((product, index) => (
           <article
             className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
             key={product.id}
@@ -149,8 +170,9 @@ export default function WishlistPage() {
                   alt={product.name}
                   className="h-full w-full rounded-xl object-cover transition hover:scale-[1.02]"
                   height={700}
-                  src={product.imageUrl}
-                  unoptimized
+                  loading={index === 0 ? "eager" : "lazy"}
+                  sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  src={getProductImageUrl(product)}
                   width={700}
                 />
               </Link>

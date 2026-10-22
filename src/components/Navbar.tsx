@@ -40,7 +40,7 @@ export default function Navbar() {
     <button
       aria-expanded={settingsOpen}
       aria-haspopup="true"
-      className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+      className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
       onClick={() => setSettingsOpen((open) => !open)}
       type="button"
     >
@@ -82,7 +82,6 @@ export default function Navbar() {
       }
       window.location.reload();
     } catch (error) {
-      console.error("Unable to reset local NeoCart data.", error);
       setSettingsMessage(
         error instanceof Error
           ? error.message
@@ -105,7 +104,7 @@ export default function Navbar() {
         <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
           {links.map(({ href, label }) => (
             <Link
-              className="text-sm font-medium text-slate-600 transition hover:text-indigo-700 dark:text-slate-300 dark:hover:text-indigo-400"
+              className="text-sm font-medium text-slate-600 transition hover:text-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
               href={href}
               key={href}
             >
@@ -128,7 +127,7 @@ export default function Navbar() {
           <button
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-            className="inline-flex size-10 items-center justify-center rounded-lg border border-slate-200 text-xl text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            className="inline-flex size-10 items-center justify-center rounded-lg border border-slate-200 text-xl text-slate-700 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
             onClick={() => setMenuOpen((open) => !open)}
             type="button"
           >

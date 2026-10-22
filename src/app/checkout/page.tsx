@@ -10,6 +10,7 @@ import { placeOrder } from "@/lib/db";
 import { STORAGE_KEYS } from "@/lib/storage";
 import { useProducts } from "@/hooks/useProducts";
 import type { CustomerDetails, Product } from "@/types";
+import { getProductImageUrl } from "@/lib/productImage";
 
 const FREE_SHIPPING_THRESHOLD = 75;
 const STANDARD_SHIPPING = 6.99;
@@ -104,7 +105,12 @@ export default function CheckoutPage() {
     clearCart,
     isReady: cartReady,
   } = useCart();
-  const { products, loading: productsLoading } = useProducts();
+  const {
+    products,
+    loading: productsLoading,
+    error: productsError,
+    retry: retryProducts,
+  } = useProducts();
   const {
     value: savedDetails,
     setValue: setSavedDetails,
@@ -153,6 +159,29 @@ export default function CheckoutPage() {
 
   if (!cartReady || productsLoading || !savedDetailsReady) {
     return <CheckoutSkeleton />;
+  }
+
+  if (productsError) {
+    return (
+      <section
+        className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-center dark:border-rose-900 dark:bg-rose-950/40"
+        role="alert"
+      >
+        <h1 className="text-xl font-bold text-rose-900 dark:text-rose-200">
+          Checkout could not load your products
+        </h1>
+        <p className="mt-2 text-sm text-rose-800 dark:text-rose-300">
+          {productsError}
+        </p>
+        <button
+          className="mt-4 rounded-lg bg-rose-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700"
+          onClick={retryProducts}
+          type="button"
+        >
+          Try again
+        </button>
+      </section>
+    );
   }
 
   if (items.length === 0) {
@@ -266,7 +295,6 @@ export default function CheckoutPage() {
       clearCart();
       router.push(`/orders/${encodeURIComponent(placedOrder.id)}?placed=1`);
     } catch (error) {
-      console.error("Unable to place the order.", error);
       setSubmitError(
         error instanceof Error
           ? error.message
@@ -550,8 +578,8 @@ export default function CheckoutPage() {
                       alt=""
                       className="h-full w-full object-cover"
                       height={120}
-                      src={line.product.imageUrl}
-                      unoptimized
+                      sizes="56px"
+                      src={getProductImageUrl(line.product)}
                       width={120}
                     />
                   </div>

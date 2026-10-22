@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useProducts } from "@/hooks/useProducts";
+import { getProductImageUrl } from "@/lib/productImage";
 import type { Product } from "@/types";
 
 const FREE_SHIPPING_THRESHOLD = 75;
@@ -47,7 +48,13 @@ export default function CartPage() {
     clearCart,
     isReady: cartReady,
   } = useCart();
-  const { products, loading: productsLoading } = useProducts();
+  const {
+    products,
+    loading: productsLoading,
+    error: productsError,
+    retry: retryProducts,
+  } = useProducts();
+  const [quantityError, setQuantityError] = useState("");
 
   const lines = useMemo<CartLine[]>(
     () =>
@@ -75,13 +82,36 @@ export default function CartPage() {
   async function changeQuantity(productId: string, quantity: number) {
     try {
       await updateQuantity(productId, quantity);
-    } catch (error) {
-      console.error("Unable to update cart quantity.", error);
+    } catch {
+      setQuantityError("Could not update the item quantity. Please try again.");
     }
   }
 
   if (loading) {
     return <CartSkeleton />;
+  }
+
+  if (productsError) {
+    return (
+      <section
+        className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-center dark:border-rose-900 dark:bg-rose-950/40"
+        role="alert"
+      >
+        <h1 className="text-xl font-bold text-rose-900 dark:text-rose-200">
+          Cart products could not be loaded
+        </h1>
+        <p className="mt-2 text-sm text-rose-800 dark:text-rose-300">
+          {productsError}
+        </p>
+        <button
+          className="mt-4 rounded-lg bg-rose-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700"
+          onClick={retryProducts}
+          type="button"
+        >
+          Try again
+        </button>
+      </section>
+    );
   }
 
   if (items.length === 0) {
@@ -131,8 +161,16 @@ export default function CartPage() {
       </header>
 
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        {quantityError && (
+          <p
+            className="rounded-lg bg-rose-50 px-4 py-3 text-sm text-rose-800 dark:bg-rose-950 dark:text-rose-200 lg:col-span-2"
+            role="alert"
+          >
+            {quantityError}
+          </p>
+        )}
         <section aria-label="Cart items" className="space-y-4">
-          {lines.map((line) =>
+          {lines.map((line, index) =>
             line.product ? (
               <article
                 className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center"
@@ -147,8 +185,9 @@ export default function CartPage() {
                     alt={line.product.name}
                     className="h-full w-full object-cover"
                     height={300}
-                    src={line.product.imageUrl}
-                    unoptimized
+                    loading={index === 0 ? "eager" : "lazy"}
+                    sizes="(min-width: 640px) 112px, 100vw"
+                    src={getProductImageUrl(line.product)}
                     width={300}
                   />
                 </Link>

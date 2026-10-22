@@ -47,7 +47,7 @@ function ProductSkeleton({ list }: { list: boolean }) {
 }
 
 export default function ProductsListing() {
-  const { products, loading } = useProducts();
+  const { products, loading, error, retry } = useProducts();
   const { display, setDisplay } = usePrefs();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -369,6 +369,25 @@ export default function ProductsListing() {
               {Array.from({ length: 6 }, (_, index) => (
                 <ProductSkeleton key={index} list={display === "list"} />
               ))}
+            </div>
+          ) : error ? (
+            <div
+              className="rounded-2xl border border-rose-200 bg-rose-50 px-6 py-12 text-center dark:border-rose-900 dark:bg-rose-950/40"
+              role="alert"
+            >
+              <h2 className="text-lg font-bold text-rose-900 dark:text-rose-200">
+                Could not load products
+              </h2>
+              <p className="mt-2 text-sm text-rose-800 dark:text-rose-300">
+                {error}
+              </p>
+              <button
+                className="mt-5 rounded-lg bg-rose-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700"
+                onClick={retry}
+                type="button"
+              >
+                Try again
+              </button>
             </div>
           ) : filteredProducts.length > 0 ? (
             <div

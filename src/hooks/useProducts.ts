@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAllProducts, getProduct } from "@/lib/db";
 import { seedProductsIfEmpty } from "@/lib/seed";
 import type { Product } from "@/types";
@@ -8,6 +8,14 @@ import type { Product } from "@/types";
 export function useProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>();
+  const [reloadToken, setReloadToken] = useState(0);
+
+  const retry = useCallback(() => {
+    setLoading(true);
+    setError(undefined);
+    setReloadToken((token) => token + 1);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -17,10 +25,13 @@ export function useProducts() {
       .then((loadedProducts) => {
         if (active) {
           setProducts(loadedProducts);
+          setError(undefined);
         }
       })
-      .catch((error: unknown) => {
-        console.error("Unable to load products from IndexedDB.", error);
+      .catch(() => {
+        if (active) {
+          setError("Products could not be loaded from local storage.");
+        }
       })
       .finally(() => {
         if (active) {
@@ -31,9 +42,9 @@ export function useProducts() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [reloadToken]);
 
-  return { products, loading };
+  return { products, loading, error, retry };
 }
 
 export function useProduct(id: string) {
@@ -41,7 +52,14 @@ export function useProduct(id: string) {
     id: string;
     product: Product | undefined;
     loading: boolean;
+    error?: string;
   }>({ id, product: undefined, loading: true });
+  const [reloadToken, setReloadToken] = useState(0);
+
+  const retry = useCallback(() => {
+    setResult({ id, product: undefined, loading: true });
+    setReloadToken((token) => token + 1);
+  }, [id]);
 
   useEffect(() => {
     let active = true;
@@ -50,23 +68,33 @@ export function useProduct(id: string) {
       .then(() => getProduct(id))
       .then((loadedProduct) => {
         if (active) {
-          setResult({ id, product: loadedProduct, loading: false });
+          setResult({
+            id,
+            product: loadedProduct,
+            loading: false,
+          });
         }
       })
-      .catch((error: unknown) => {
-        console.error(`Unable to load product "${id}" from IndexedDB.`, error);
+      .catch(() => {
         if (active) {
-          setResult({ id, product: undefined, loading: false });
+          setResult({
+            id,
+            product: undefined,
+            loading: false,
+            error: "Product details could not be loaded from local storage.",
+          });
         }
       });
 
     return () => {
       active = false;
     };
-  }, [id]);
+  }, [id, reloadToken]);
 
   return {
     product: result.id === id ? result.product : undefined,
     loading: result.id !== id || result.loading,
+    error: result.id === id ? result.error : undefined,
+    retry,
   };
 }
