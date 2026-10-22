@@ -6,10 +6,10 @@ export default function HomePage() {
       <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-indigo-600">
         Welcome to NeoCart
       </p>
-      <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+      <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
         Find something you&apos;ll love.
       </h1>
-      <p className="mt-5 max-w-xl text-base leading-7 text-slate-600">
+      <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300">
         Explore a thoughtful collection of everyday favorites, all in one place.
       </p>
       <Link

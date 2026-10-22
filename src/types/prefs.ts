@@ -1,4 +1,4 @@
 export type Prefs = {
-  theme: "light" | "dark" | "system";
+  theme: "light" | "dark";
   display: "grid" | "list";
 };
