@@ -1,6 +1,6 @@
 "use client";
 
-import type { Order, PlaceOrderInput, Product } from "@/types";
+import type { Order, OrderStatus, PlaceOrderInput, Product } from "@/types";
 
 const DATABASE_NAME = "neocart-db";
 const DATABASE_VERSION = 1;
@@ -251,6 +251,7 @@ export function placeOrder(input: PlaceOrderInput): Promise<Order> {
             subtotal,
             shipping,
             total: subtotal + shipping,
+            status: "pending",
           };
 
           for (const item of orderItems) {
@@ -290,15 +291,143 @@ export function placeOrder(input: PlaceOrderInput): Promise<Order> {
   );
 }
 
+const CONFIRM_ORDER_AFTER = 60 * 1000;
+const DELIVER_ORDER_AFTER = 24 * 60 * 60 * 1000;
+
+function simulatedStatus(order: Order, now: number): OrderStatus {
+  if (order.status === "cancelled") {
+    return "cancelled";
+  }
+  const age = now - order.createdAt;
+  if (age >= DELIVER_ORDER_AFTER) {
+    return "delivered";
+  }
+  if (age >= CONFIRM_ORDER_AFTER) {
+    return "confirmed";
+  }
+  return order.status ?? "pending";
+}
+
 export function getAllOrders(): Promise<Order[]> {
-  return withStore("orders", "readonly", (store) =>
-    requestResult<Order[]>(store.getAll()),
-  );
+  return withStore("orders", "readwrite", async (store) => {
+    const orders = await requestResult<Order[]>(store.getAll());
+    const now = Date.now();
+    return Promise.all(
+      orders.map((order) => {
+        const status = simulatedStatus(order, now);
+        if (status === order.status) {
+          return order;
+        }
+
+        const updatedOrder = { ...order, status };
+        return requestResult(store.put(updatedOrder)).then(() => updatedOrder);
+      }),
+    );
+  }).then((orders) => orders.sort((first, second) => second.createdAt - first.createdAt));
 }
 
 export function getOrder(id: string): Promise<Order | undefined> {
-  return withStore("orders", "readonly", (store) =>
-    requestResult<Order | undefined>(store.get(id)),
+  return withStore("orders", "readwrite", async (store) => {
+    const order = await requestResult<Order | undefined>(store.get(id));
+    if (!order) {
+      return undefined;
+    }
+
+    const status = simulatedStatus(order, Date.now());
+    if (status === order.status) {
+      return order;
+    }
+
+    const updatedOrder = { ...order, status };
+    await requestResult(store.put(updatedOrder));
+    return updatedOrder;
+  });
+}
+
+export function cancelOrder(id: string): Promise<Order> {
+  return openDatabase().then(
+    (database) =>
+      new Promise<Order>((resolve, reject) => {
+        const transaction = database.transaction(
+          ["products", "orders"],
+          "readwrite",
+        );
+        const ordersStore = transaction.objectStore("orders");
+        const productsStore = transaction.objectStore("products");
+        let order: Order | undefined;
+        let failure: Error | undefined;
+
+        transaction.oncomplete = () => {
+          if (order) {
+            resolve(order);
+          } else {
+            reject(new Error("Order cancellation completed without an order."));
+          }
+        };
+        transaction.onabort = () =>
+          reject(
+            failure ??
+              transaction.error ??
+              new Error("Order cancellation was aborted."),
+          );
+        transaction.onerror = () => {
+          failure ??=
+            transaction.error ?? new Error("Order cancellation failed.");
+        };
+
+        const abort = (error: Error) => {
+          failure = error;
+          try {
+            transaction.abort();
+          } catch {
+            reject(error);
+          }
+        };
+
+        const orderRequest = ordersStore.get(id);
+        orderRequest.onsuccess = () => {
+          const storedOrder = orderRequest.result as Order | undefined;
+          if (!storedOrder) {
+            abort(new Error("This order could not be found."));
+            return;
+          }
+
+          const currentStatus = simulatedStatus(storedOrder, Date.now());
+          if (currentStatus !== "pending") {
+            abort(new Error("Only pending orders can be cancelled."));
+            return;
+          }
+
+          const cancelledOrder: Order = {
+            ...storedOrder,
+            status: "cancelled",
+          };
+          order = cancelledOrder;
+          ordersStore.put(cancelledOrder);
+
+          for (const item of storedOrder.items) {
+            const productRequest = productsStore.get(item.productId);
+            productRequest.onsuccess = () => {
+              const product = productRequest.result as Product | undefined;
+              if (product) {
+                productsStore.put({
+                  ...product,
+                  stock: product.stock + item.quantity,
+                });
+              }
+            };
+            productRequest.onerror = () => {
+              abort(
+                productRequest.error ??
+                  new Error(`Unable to restore stock for "${item.productId}".`),
+              );
+            };
+          }
+        };
+        orderRequest.onerror = () => {
+          abort(orderRequest.error ?? new Error("Unable to load this order."));
+        };
+      }),
   );
 }
 

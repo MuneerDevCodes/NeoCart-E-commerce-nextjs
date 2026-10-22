@@ -1,5 +1,7 @@
 import type { CustomerDetails } from "./customer";
 
+export type OrderStatus = "pending" | "confirmed" | "delivered" | "cancelled";
+
 export type OrderItem = {
   productId: string;
   name: string;
@@ -18,6 +20,7 @@ export type Order = {
   shipping: number;
   total: number;
   paymentMethod: "cash-on-delivery";
+  status: OrderStatus;
   notes?: string;
 };
 
