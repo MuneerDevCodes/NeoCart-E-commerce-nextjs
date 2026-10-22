@@ -3,8 +3,12 @@ export type Product = {
   name: string;
   description: string;
   price: number;
+  compareAtPrice?: number;
   category: string;
-  image?: string;
+  rating: number;
+  stock: number;
+  featured: boolean;
+  imageUrl: string;
   fileId?: string;
   createdAt: number;
 };
