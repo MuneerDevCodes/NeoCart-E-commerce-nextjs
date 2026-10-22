@@ -1,6 +1,6 @@
 export type CustomerDetails = {
   fullName: string;
-  email: string;
+  email?: string;
   phone?: string;
   address: {
     line1: string;

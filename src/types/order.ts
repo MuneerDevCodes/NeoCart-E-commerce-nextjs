@@ -10,9 +10,20 @@ export type OrderItem = {
 
 export type Order = {
   id: string;
+  orderNumber: string;
   createdAt: number;
   items: OrderItem[];
   customer: CustomerDetails;
   subtotal: number;
+  shipping: number;
   total: number;
+  paymentMethod: "cash-on-delivery";
+  notes?: string;
+};
+
+export type PlaceOrderInput = Pick<
+  Order,
+  "id" | "orderNumber" | "createdAt" | "customer" | "paymentMethod" | "notes"
+> & {
+  items: Pick<OrderItem, "productId" | "quantity">[];
 };

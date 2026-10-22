@@ -1,6 +1,6 @@
 "use client";
 
-import type { Order, Product } from "@/types";
+import type { Order, PlaceOrderInput, Product } from "@/types";
 
 const DATABASE_NAME = "neocart-db";
 const DATABASE_VERSION = 1;
@@ -145,6 +145,148 @@ export function deleteProduct(id: string): Promise<void> {
 export function addOrder(order: Order): Promise<IDBValidKey> {
   return withStore("orders", "readwrite", (store) =>
     requestResult<IDBValidKey>(store.add(order)),
+  );
+}
+
+export function placeOrder(input: PlaceOrderInput): Promise<Order> {
+  const requestedItems = new Map<string, number>();
+  for (const item of input.items) {
+    requestedItems.set(
+      item.productId,
+      (requestedItems.get(item.productId) ?? 0) + item.quantity,
+    );
+  }
+
+  return openDatabase().then(
+    (database) =>
+      new Promise<Order>((resolve, reject) => {
+        const transaction = database.transaction(
+          ["products", "orders"],
+          "readwrite",
+        );
+        const productsStore = transaction.objectStore("products");
+        const ordersStore = transaction.objectStore("orders");
+        const products = new Map<string, Product>();
+        let pendingReads = requestedItems.size;
+        let order: Order | undefined;
+        let failure: Error | undefined;
+
+        transaction.oncomplete = () => {
+          if (order) {
+            resolve(order);
+          } else {
+            reject(new Error("The order transaction completed without an order."));
+          }
+        };
+        transaction.onabort = () => {
+          reject(
+            failure ??
+              transaction.error ??
+              new Error("The order transaction was aborted."),
+          );
+        };
+        transaction.onerror = () => {
+          failure ??=
+            transaction.error ?? new Error("The order transaction failed.");
+        };
+
+        const abort = (error: Error) => {
+          failure = error;
+          try {
+            transaction.abort();
+          } catch {
+            reject(error);
+          }
+        };
+
+        if (requestedItems.size === 0) {
+          abort(new Error("Cannot place an order with no items."));
+          return;
+        }
+
+        const buildOrder = () => {
+          if (--pendingReads > 0) {
+            return;
+          }
+
+          const orderItems = [...requestedItems].map(
+            ([productId, quantity]) => {
+            const product = products.get(productId);
+            if (!product) {
+              throw new Error(
+                `Product "${productId}" is no longer available.`,
+              );
+            }
+            if (
+              !Number.isInteger(quantity) ||
+              quantity < 1 ||
+              quantity > product.stock
+            ) {
+              throw new Error(
+                `${product.name} does not have enough stock for this order.`,
+              );
+            }
+
+            return {
+              product,
+              snapshot: {
+                productId: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.imageUrl,
+                quantity,
+              },
+            };
+            },
+          );
+          const subtotal = orderItems.reduce(
+            (sum, item) => sum + item.product.price * item.snapshot.quantity,
+            0,
+          );
+          const shipping = subtotal >= 75 ? 0 : 6.99;
+
+          order = {
+            ...input,
+            items: orderItems.map((item) => item.snapshot),
+            subtotal,
+            shipping,
+            total: subtotal + shipping,
+          };
+
+          for (const item of orderItems) {
+            productsStore.put({
+              ...item.product,
+              stock: item.product.stock - item.snapshot.quantity,
+            });
+          }
+          ordersStore.add(order);
+        };
+
+        for (const [productId] of requestedItems) {
+          const request = productsStore.get(productId);
+          request.onsuccess = () => {
+            const product = request.result as Product | undefined;
+            if (product) {
+              products.set(productId, product);
+            }
+            try {
+              buildOrder();
+            } catch (error) {
+              abort(
+                error instanceof Error
+                  ? error
+                  : new Error("Unable to validate order inventory."),
+              );
+            }
+          };
+          request.onerror = () => {
+            abort(
+              request.error ??
+                new Error(`Unable to read product "${productId}".`),
+            );
+          };
+        }
+      }),
   );
 }
 
