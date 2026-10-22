@@ -444,6 +444,32 @@ export function getFile(id: string): Promise<Blob | undefined> {
   });
 }
 
+export function clearAllDatabaseData(): Promise<void> {
+  return openDatabase().then(
+    (database) =>
+      new Promise<void>((resolve, reject) => {
+        const transaction = database.transaction(
+          ["products", "orders", "files"],
+          "readwrite",
+        );
+        transaction.objectStore("products").clear();
+        transaction.objectStore("orders").clear();
+        transaction.objectStore("files").clear();
+        transaction.oncomplete = () => resolve();
+        transaction.onabort = () =>
+          reject(
+            transaction.error ??
+              new Error("Clearing local database data was aborted."),
+          );
+        transaction.onerror = () =>
+          reject(
+            transaction.error ??
+              new Error("Unable to clear local database data."),
+          );
+      }),
+  );
+}
+
 export function deleteFile(id: string): Promise<void> {
   return withStore("files", "readwrite", async (store) => {
     await requestResult(store.delete(id));

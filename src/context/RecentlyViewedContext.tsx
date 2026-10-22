@@ -13,6 +13,7 @@ import { STORAGE_KEYS } from "@/lib/storage";
 type RecentlyViewedContextValue = {
   recentlyViewed: string[];
   addRecentlyViewed: (productId: string) => void;
+  clearRecentlyViewed: () => void;
   isReady: boolean;
 };
 
@@ -46,9 +47,18 @@ export function RecentlyViewedProvider({
     [setValue],
   );
 
+  const clearRecentlyViewed = useCallback(() => {
+    setValue([]);
+  }, [setValue]);
+
   const contextValue = useMemo(
-    () => ({ recentlyViewed, addRecentlyViewed, isReady }),
-    [recentlyViewed, addRecentlyViewed, isReady],
+    () => ({
+      recentlyViewed,
+      addRecentlyViewed,
+      clearRecentlyViewed,
+      isReady,
+    }),
+    [recentlyViewed, addRecentlyViewed, clearRecentlyViewed, isReady],
   );
 
   return (
