@@ -7,6 +7,8 @@ import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
 import { useProducts } from "@/hooks/useProducts";
 import { getProductImageUrl } from "@/lib/productImage";
 
+const HOMEPAGE_PRODUCT_LIMIT = 8;
+
 function ProductCardSkeleton() {
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
@@ -49,14 +51,10 @@ export default function HomePage() {
   const { recentlyViewed, isReady: recentReady } = useRecentlyViewed();
   const categories = [...new Set(products.map((product) => product.category))];
   const featuredProducts = products.filter((product) => product.featured);
-  const homepageProducts =
-    featuredProducts.length > 0
-      ? featuredProducts
-      : categories
-          .map((category) =>
-            products.find((product) => product.category === category),
-          )
-          .filter((product) => product !== undefined);
+  const homepageProducts = [
+    ...featuredProducts,
+    ...products.filter((product) => !product.featured),
+  ].slice(0, HOMEPAGE_PRODUCT_LIMIT);
   const recentlyViewedProducts = recentReady
     ? recentlyViewed
         .map((id) => products.find((product) => product.id === id))
@@ -64,38 +62,40 @@ export default function HomePage() {
     : [];
 
   return (
-    <div className="flex flex-col gap-16 pb-8 sm:gap-20">
-      <section className="relative isolate overflow-hidden rounded-3xl bg-indigo-950 px-6 py-16 text-white sm:px-12 sm:py-20 lg:px-16">
-        <div className="absolute -right-20 -top-24 -z-10 size-80 rounded-full bg-indigo-500/30 blur-3xl" />
-        <div className="absolute -bottom-40 left-1/3 -z-10 size-96 rounded-full bg-fuchsia-500/20 blur-3xl" />
-        <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-indigo-200">
+    <div className="flex flex-col gap-20 pb-10 sm:gap-24">
+      <section className="relative isolate min-h-[30rem] overflow-hidden rounded-[2rem] bg-[#e8e9df] text-[#202b24] dark:bg-[#27332b] dark:text-white sm:min-h-[34rem]">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_55%,rgba(255,255,255,0.7),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_80%_55%,rgba(178,200,174,0.14),transparent_50%)]" />
+        <div className="relative z-10 flex min-h-[30rem] max-w-3xl flex-col items-start justify-center px-7 py-14 sm:min-h-[34rem] sm:px-12 lg:px-16">
+          <p className="inline-flex items-center gap-2 rounded-full border border-[#315b49]/15 bg-white/55 px-3.5 py-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#496552] dark:border-white/15 dark:bg-white/5 dark:text-[#c1d2bf]">
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-[#66846a]" />
             Everyday finds, thoughtfully picked
           </p>
-          <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            Find something
-            <span className="block text-indigo-300">you&apos;ll love.</span>
+          <h1 className="mt-7 max-w-xl text-[3.25rem] font-semibold leading-[0.98] tracking-[-0.065em] sm:text-6xl lg:text-7xl">
+            Make room for
+            <span className="mt-1 block font-serif font-medium italic text-[#66816a] dark:text-[#bfd0ba]">
+              the good stuff.
+            </span>
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-7 text-indigo-100 sm:text-lg">
+          <p className="mt-6 max-w-md text-base leading-7 text-[#59635a] dark:text-slate-300 sm:text-lg">
             Shop useful, well-made favorites for your home, your routine, and
             everywhere in between.
           </p>
           <Link
-            className="mt-8 inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-indigo-950 transition hover:bg-indigo-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-[#315b49] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#315b49]/15 transition hover:-translate-y-0.5 hover:bg-[#244536] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#315b49] dark:bg-[#c1d2bf] dark:text-[#1b2b20] dark:hover:bg-white"
             href="/products"
           >
-            Shop now <span aria-hidden="true" className="ml-2">→</span>
+            Explore the collection <span aria-hidden="true">↗</span>
           </Link>
         </div>
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-0 right-0 hidden h-full w-[38%] items-end justify-center sm:flex"
+          className="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] items-center justify-center sm:flex"
         >
-          <div className="mb-[-15%] mr-[-10%] aspect-square w-[90%] rotate-6 rounded-[3rem] border border-white/15 bg-white/5 p-5">
+          <div className="relative aspect-[0.82] h-[84%] max-h-[30rem] translate-x-4 rotate-2 overflow-hidden rounded-[1.5rem] border-[7px] border-white/80 bg-white/50 shadow-[0_30px_90px_-35px_rgba(32,48,37,0.4)] dark:border-white/10">
             {products[0]?.imageUrl && (
               <Image
                 alt=""
-                className="h-full w-full rounded-[2.25rem] object-cover opacity-90"
+                className="h-full w-full object-cover transition duration-700 hover:scale-105"
                 height={800}
                 priority
                 sizes="(min-width: 1024px) 34vw, 0px"
@@ -148,7 +148,7 @@ export default function HomePage() {
 
               return (
                 <Link
-                  className="group relative isolate aspect-[4/3] overflow-hidden rounded-2xl bg-slate-200 dark:bg-slate-800"
+                  className="group relative isolate aspect-[4/3] overflow-hidden rounded-[1.35rem] bg-slate-200 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-800"
                   href={`/products?category=${encodeURIComponent(category)}`}
                   key={category}
                 >
@@ -160,8 +160,8 @@ export default function HomePage() {
                     src={getProductImageUrl(categoryProduct)}
                     width={800}
                   />
-                  <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent" />
-                  <span className="absolute bottom-4 left-4 text-base font-bold text-white sm:text-lg">
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/80 via-slate-950/5 to-transparent transition group-hover:from-slate-950/90" />
+                  <span className="absolute bottom-4 left-4 text-base font-semibold tracking-tight text-white sm:bottom-5 sm:left-5 sm:text-lg">
                     {category}
                     <span aria-hidden="true" className="ml-2 opacity-0 transition group-hover:opacity-100">→</span>
                   </span>
@@ -186,9 +186,9 @@ export default function HomePage() {
             View all <span aria-hidden="true">→</span>
           </Link>
         </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
           {loading
-            ? Array.from({ length: 4 }, (_, index) => (
+            ? Array.from({ length: HOMEPAGE_PRODUCT_LIMIT }, (_, index) => (
                 <ProductCardSkeleton key={index} />
               ))
               : error ? (
@@ -236,7 +236,7 @@ export default function HomePage() {
 
       <section
         aria-label="Shopping benefits"
-        className="grid grid-cols-1 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-slate-50 px-5 dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+        className="grid grid-cols-1 divide-y divide-[#e5e3dc] rounded-[1.5rem] border border-[#e8e6df] bg-white/65 px-5 dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
       >
         {[
           { title: "Free shipping", detail: "On orders over $50", icon: "📦" },

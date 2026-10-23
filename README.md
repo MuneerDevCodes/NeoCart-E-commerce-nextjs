@@ -18,6 +18,7 @@ Verify changes with `npm run lint` and `npm run build`.
 - Checkout with optional saved shipping details and simulated Cash on Delivery orders.
 - Order history, order details, and cancellation with stock restoration.
 - Light/dark theme and responsive layouts.
+- About and contact pages, with contact message drafts saved locally in the browser.
 
 ## Browser storage
 
@@ -28,6 +29,7 @@ Verify changes with `npm run lint` and `npm run build`.
 | Preferences | `localStorage` | Theme and product display mode |
 | Recently viewed | `localStorage` | Up to eight product IDs |
 | Shipping details | `localStorage` | Saved only when checkout consent is selected |
+| Contact message draft | `localStorage` | Saved on this device only; contact messages are not sent |
 | Products | IndexedDB (`neocart-db`, `products`) | 50 products imported from `public/productfile.md` (10 per category), keyed by SKU, with current stock |
 | Orders | IndexedDB (`neocart-db`, `orders`) | Order and item snapshots |
 | Files | IndexedDB (`neocart-db`, `files`) | Local file records |

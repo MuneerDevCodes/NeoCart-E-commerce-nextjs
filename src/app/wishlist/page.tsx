@@ -99,7 +99,7 @@ export default function WishlistPage() {
           Save products you love and they&apos;ll be ready when you are.
         </p>
         <Link
-          className="mt-7 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white hover:bg-indigo-700"
+          className="mt-7 rounded-full bg-[#315b49] px-6 py-3 text-sm font-semibold text-white hover:bg-[#244536] dark:bg-[#a7c4ad] dark:text-[#17251c]"
           href="/products"
         >
           Find something to love
@@ -111,7 +111,7 @@ export default function WishlistPage() {
   return (
     <div className="space-y-8">
       <header>
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
           Saved for later
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
@@ -148,7 +148,7 @@ export default function WishlistPage() {
       {message && (
         <p
           aria-live="polite"
-          className="rounded-lg bg-indigo-50 px-4 py-3 text-sm text-indigo-900 dark:bg-indigo-950 dark:text-indigo-200"
+          className="rounded-xl bg-[#e8eee8] px-4 py-3 text-sm text-[#315b49] dark:bg-slate-800 dark:text-[#c8dccb]"
           role="status"
         >
           {message}
@@ -158,10 +158,10 @@ export default function WishlistPage() {
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {wishedProducts.map((product, index) => (
           <article
-            className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+            className="group flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-[#e8e6df] bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-24px_rgba(39,53,43,0.3)] dark:border-slate-800 dark:bg-slate-900"
             key={product.id}
           >
-            <div className="relative aspect-square bg-slate-100 dark:bg-slate-800">
+            <div             className="relative aspect-[4/3] bg-slate-100 dark:bg-slate-800 sm:aspect-square">
               <Link
                 aria-label={`View ${product.name}`}
                 className="absolute inset-0"
@@ -169,7 +169,7 @@ export default function WishlistPage() {
               >
                 <Image
                   alt={product.name}
-                  className="h-full w-full rounded-xl object-cover transition hover:scale-[1.02]"
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   height={700}
                   loading={index === 0 ? "eager" : "lazy"}
                   sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -187,11 +187,11 @@ export default function WishlistPage() {
               </button>
             </div>
             <div className="flex flex-1 flex-col p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#6d806e] dark:text-[#a7c4ad]">
                 {product.category}
               </p>
               <Link
-                className="mt-1 font-semibold text-slate-900 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-300"
+                className="mt-1 font-semibold text-slate-900 hover:text-[#315b49] dark:text-white dark:hover:text-[#c8dccb]"
                 href={`/products/${product.id}`}
               >
                 {product.name}
@@ -200,7 +200,7 @@ export default function WishlistPage() {
                 ${product.price.toFixed(2)}
               </p>
               <button
-                className="mt-4 min-h-11 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-400 dark:disabled:bg-slate-700"
+                className="mt-4 min-h-11 rounded-full bg-[#315b49] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#244536] disabled:cursor-not-allowed disabled:bg-slate-400 dark:bg-[#a7c4ad] dark:text-[#17251c] dark:disabled:bg-slate-700"
                 disabled={!cartReady || product.stock < 1 || movingId === product.id}
                 onClick={() => void moveToCart(product)}
                 type="button"

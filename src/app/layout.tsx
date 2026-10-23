@@ -17,10 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="flex min-h-screen flex-col bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+      <body className="flex min-h-screen flex-col bg-[#f7f6f2] text-[#20231f] antialiased dark:bg-[#151814] dark:text-[#f1f0e9]">
         <GlobalProviders>
           <Navbar />
-          <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-10 sm:px-6 lg:px-8">
+          <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
             {children}
           </main>
           <Footer />

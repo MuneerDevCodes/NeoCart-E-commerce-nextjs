@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { placeOrder } from "@/lib/db";
 import { STORAGE_KEYS } from "@/lib/storage";
 import { useProducts } from "@/hooks/useProducts";
 import { getProductImageUrl } from "@/lib/productImage";
-import type { CustomerDetails, Product } from "@/types";
+import type { CartItem, CustomerDetails, Product } from "@/types";
 
 
 const FREE_SHIPPING_THRESHOLD = 75;
@@ -99,8 +99,16 @@ function CheckoutSkeleton() {
   );
 }
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const buyNowMode = searchParams.has("buyNow");
+  const buyNowProductId = searchParams.get("buyNow");
+  const rawBuyNowQuantity = searchParams.get("quantity");
+  const buyNowQuantity =
+    rawBuyNowQuantity === null ? 1 : Number(rawBuyNowQuantity);
+  const validBuyNowQuantity =
+    Number.isSafeInteger(buyNowQuantity) && buyNowQuantity > 0;
   const {
     items,
     clearCart,
@@ -132,13 +140,31 @@ export default function CheckoutPage() {
     ...(usableSavedDetails ?? {}),
   };
   const shouldSaveDetails = saveConsent ?? usableSavedDetails !== null;
+  const checkoutItems = useMemo<CartItem[]>(
+    () =>
+      buyNowMode
+        ? [
+            {
+              productId: buyNowProductId ?? "",
+              quantity: validBuyNowQuantity ? buyNowQuantity : 1,
+            },
+          ]
+        : items,
+    [
+      buyNowMode,
+      buyNowProductId,
+      buyNowQuantity,
+      items,
+      validBuyNowQuantity,
+    ],
+  );
   const lines = useMemo(
     () =>
-      items.map((item) => ({
+      checkoutItems.map((item) => ({
         ...item,
         product: products.find((product) => product.id === item.productId),
       })),
-    [items, products],
+    [checkoutItems, products],
   );
   const validLines = lines.filter(
     (line): line is typeof line & { product: Product } =>
@@ -185,7 +211,26 @@ export default function CheckoutPage() {
     );
   }
 
-  if (items.length === 0) {
+  if (buyNowMode && (!buyNowProductId || !validBuyNowQuantity)) {
+    return (
+      <section className="flex flex-1 flex-col items-center justify-center py-16 text-center">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+          This checkout link is invalid
+        </h1>
+        <p className="mt-3 text-slate-600 dark:text-slate-400">
+          Choose a product and try Buy it now again.
+        </p>
+        <Link
+          className="mt-6 rounded-full bg-[#315b49] px-6 py-3 text-sm font-semibold text-white hover:bg-[#244536] dark:bg-[#a7c4ad] dark:text-[#17251c]"
+          href="/products"
+        >
+          Browse products
+        </Link>
+      </section>
+    );
+  }
+
+  if (checkoutItems.length === 0) {
     return (
       <section className="flex flex-1 flex-col items-center justify-center py-16 text-center">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
@@ -274,7 +319,7 @@ export default function CheckoutPage() {
             customer,
             paymentMethod: "cash-on-delivery",
             notes: fields.notes.trim() || undefined,
-            items: items.map(({ productId, quantity }) => ({
+            items: checkoutItems.map(({ productId, quantity }) => ({
               productId,
               quantity,
             })),
@@ -293,7 +338,9 @@ export default function CheckoutPage() {
         }
       }
 
-      clearCart();
+      if (!buyNowMode) {
+        clearCart();
+      }
       router.push(`/orders/${encodeURIComponent(placedOrder.id)}?placed=1`);
     } catch (error) {
       setSubmitError(
@@ -314,12 +361,12 @@ export default function CheckoutPage() {
   }
 
   const inputClass =
-    "mt-1.5 block min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500";
+    "mt-1.5 block min-h-11 w-full rounded-xl border border-[#deded5] bg-[#fbfbf9] px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#78917a] focus:ring-2 focus:ring-[#315b49]/15 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500";
 
   return (
     <div className="space-y-8">
       <header>
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
           Almost there
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
@@ -329,7 +376,7 @@ export default function CheckoutPage() {
 
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_21rem]">
         <form
-          className="space-y-7 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-7"
+          className="space-y-7 rounded-[1.5rem] border border-[#e8e6df] bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7"
           noValidate
           onSubmit={(event) => void handleSubmit(event)}
         >
@@ -342,7 +389,7 @@ export default function CheckoutPage() {
             </h2>
             {savedDetails && (
               <button
-                className="mt-2 text-sm font-semibold text-indigo-700 hover:underline dark:text-indigo-400"
+                className="mt-2 text-sm font-semibold text-[#315b49] hover:underline dark:text-[#a7c4ad]"
                 onClick={() => {
                   removeSavedDetails();
                   setSaveConsent(false);
@@ -498,7 +545,7 @@ export default function CheckoutPage() {
             <legend className="text-lg font-bold text-slate-900 dark:text-white">
               Payment method
             </legend>
-            <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-indigo-300 bg-indigo-50 p-4 dark:border-indigo-800 dark:bg-indigo-950/50">
+            <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-[#c9d5c9] bg-[#f3f6f1] p-4 dark:border-slate-700 dark:bg-slate-800/70">
               <input
                 checked
                 className="mt-0.5 size-4 border-slate-300 text-indigo-600 focus:ring-indigo-500"
@@ -536,10 +583,13 @@ export default function CheckoutPage() {
               role="alert"
             >
               {missingProduct
-                ? "One or more cart products are unavailable. Please remove them from your cart."
-                : "One or more cart quantities exceed available stock. Please update your cart."}
-              <Link className="ml-1 font-semibold underline" href="/cart">
-                Return to cart
+                ? "One or more products are unavailable."
+                : "One or more quantities exceed available stock."}
+              <Link
+                className="ml-1 font-semibold underline"
+                href={buyNowMode ? "/products" : "/cart"}
+              >
+                {buyNowMode ? "Browse products" : "Return to cart"}
               </Link>
             </p>
           )}
@@ -553,7 +603,7 @@ export default function CheckoutPage() {
           )}
 
           <button
-            className="min-h-12 w-full rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-700 disabled:cursor-wait disabled:bg-slate-400 dark:disabled:bg-slate-700"
+            className="min-h-12 w-full rounded-full bg-[#315b49] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#244536] disabled:cursor-wait disabled:bg-slate-400 dark:bg-[#a7c4ad] dark:text-[#17251c] dark:hover:bg-[#c0d5c4] dark:disabled:bg-slate-700"
             disabled={
               submitting ||
               missingProduct ||
@@ -566,7 +616,7 @@ export default function CheckoutPage() {
           </button>
         </form>
 
-        <aside className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-6">
+        <aside className="rounded-[1.35rem] border border-[#e8e6df] bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-24">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Order summary
           </h2>
@@ -631,5 +681,13 @@ export default function CheckoutPage() {
         </aside>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<CheckoutSkeleton />}>
+      <CheckoutContent />
+    </Suspense>
   );
 }

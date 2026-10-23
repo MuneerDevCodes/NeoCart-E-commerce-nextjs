@@ -126,7 +126,7 @@ export default function CartPage() {
           Find something you love and it will be waiting here.
         </p>
         <Link
-          className="mt-7 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-700"
+          className="mt-7 rounded-full bg-[#315b49] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#244536] dark:bg-[#a7c4ad] dark:text-[#17251c]"
           href="/products"
         >
           Browse products
@@ -139,7 +139,7 @@ export default function CartPage() {
     <div className="space-y-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
             Your selections
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
@@ -174,7 +174,7 @@ export default function CartPage() {
           {lines.map((line, index) =>
             line.product ? (
               <article
-                className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center"
+                className="flex flex-col gap-4 rounded-[1.35rem] border border-[#e8e6df] bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center"
                 key={line.productId}
               >
                 <Link
@@ -199,7 +199,7 @@ export default function CartPage() {
                       {line.product.category}
                     </p>
                     <Link
-                      className="mt-1 block truncate font-semibold text-slate-900 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-300"
+                      className="mt-1 block truncate font-semibold text-slate-900 hover:text-[#315b49] dark:text-white dark:hover:text-[#c8dccb]"
                       href={`/products/${line.product.id}`}
                     >
                       {line.product.name}
@@ -217,11 +217,11 @@ export default function CartPage() {
                   <div className="flex items-center justify-between gap-5 sm:justify-end">
                     <div
                       aria-label={`Quantity for ${line.product.name}`}
-                      className="inline-flex items-center rounded-lg border border-slate-300 dark:border-slate-700"
+                      className="inline-flex items-center rounded-full border border-[#deded5] dark:border-slate-700"
                     >
                       <button
                         aria-label={`Decrease ${line.product.name} quantity`}
-                        className="inline-flex size-10 items-center justify-center text-lg text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-800"
+                        className="inline-flex size-10 items-center justify-center rounded-full text-lg text-slate-700 transition hover:bg-[#edf1eb] disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-800"
                         disabled={line.quantity <= 1}
                         onClick={() =>
                           void changeQuantity(line.productId, line.quantity - 1)
@@ -235,7 +235,7 @@ export default function CartPage() {
                       </span>
                       <button
                         aria-label={`Increase ${line.product.name} quantity`}
-                        className="inline-flex size-10 items-center justify-center text-lg text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-800"
+                        className="inline-flex size-10 items-center justify-center rounded-full text-lg text-slate-700 transition hover:bg-[#edf1eb] disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-800"
                         disabled={
                           line.quantity >= line.product.stock ||
                           line.product.stock < 1
@@ -289,7 +289,7 @@ export default function CartPage() {
           )}
         </section>
 
-        <aside className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-6">
+        <aside className="rounded-[1.35rem] border border-[#e8e6df] bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-24">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Order summary
           </h2>
@@ -330,7 +330,7 @@ export default function CartPage() {
             aria-disabled={validLines.length === 0}
             className={`mt-5 flex min-h-12 items-center justify-center rounded-xl px-4 py-3 text-sm font-bold transition ${
               validLines.length > 0
-                ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                ? "bg-[#315b49] text-white hover:bg-[#244536] dark:bg-[#a7c4ad] dark:text-[#17251c]"
                 : "pointer-events-none bg-slate-300 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
             }`}
             href={validLines.length > 0 ? "/checkout" : "#"}
@@ -344,7 +344,7 @@ export default function CartPage() {
             </p>
           )}
           <Link
-            className="mt-4 block text-center text-sm font-semibold text-indigo-700 hover:underline dark:text-indigo-400"
+            className="mt-4 block text-center text-sm font-semibold text-[#315b49] hover:underline dark:text-[#a7c4ad]"
             href="/products"
           >
             Continue shopping

@@ -175,7 +175,7 @@ export default function ProductsListing() {
           Category
         </label>
         <select
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          className="w-full rounded-xl border border-[#deded5] bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-[#78917a] focus:ring-2 focus:ring-[#315b49]/15 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
           id={`${idPrefix}-category-filter`}
           onChange={(event) => updateParams({ category: event.target.value })}
           value={category}
@@ -197,7 +197,7 @@ export default function ProductsListing() {
           <label className="text-xs text-slate-600 dark:text-slate-400">
             Minimum
             <input
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+              className="mt-1 w-full rounded-xl border border-[#deded5] bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-[#78917a] dark:border-slate-700 dark:bg-slate-900 dark:text-white"
               min="0"
               onChange={(event) => updateParams({ minPrice: event.target.value })}
               placeholder="$0"
@@ -208,7 +208,7 @@ export default function ProductsListing() {
           <label className="text-xs text-slate-600 dark:text-slate-400">
             Maximum
             <input
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+              className="mt-1 w-full rounded-xl border border-[#deded5] bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-[#78917a] dark:border-slate-700 dark:bg-slate-900 dark:text-white"
               min="0"
               onChange={(event) => updateParams({ maxPrice: event.target.value })}
               placeholder="Any"
@@ -236,7 +236,7 @@ export default function ProductsListing() {
   return (
     <div className="space-y-8">
       <header>
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+        <p         className="text-xs font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
           The NeoCart collection
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
@@ -249,7 +249,7 @@ export default function ProductsListing() {
       </header>
 
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
-        <aside className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-6">
+        <aside className="rounded-[1.35rem] border border-[#e8e6df] bg-white/80 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-24">
           <details className="group lg:hidden">
             <summary className="cursor-pointer list-none text-sm font-bold text-slate-900 marker:hidden dark:text-white">
               <span className="flex items-center justify-between">
@@ -277,7 +277,7 @@ export default function ProductsListing() {
               </label>
               <input
                 autoComplete="off"
-                className="min-h-11 min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-400"
+                className="min-h-12 min-w-0 flex-1 rounded-full border border-[#deded5] bg-white px-5 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-[#78917a] focus:ring-2 focus:ring-[#315b49]/15 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-400"
                 id="product-search"
                 onChange={(event) => setSearchDraft(event.target.value)}
                 placeholder="Search by name or description"
@@ -288,7 +288,7 @@ export default function ProductsListing() {
                 Sort products
               </label>
               <select
-                className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                className="min-h-12 rounded-full border border-[#deded5] bg-white px-4 text-sm text-slate-900 outline-none focus:border-[#78917a] dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 id="product-sort"
                 onChange={(event) =>
                   updateParams({ sort: event.target.value === "newest" ? "" : event.target.value })
@@ -324,7 +324,7 @@ export default function ProductsListing() {
                 )}
                 <div
                   aria-label="Product display mode"
-                  className="inline-flex rounded-lg border border-slate-300 p-1 dark:border-slate-700"
+                  className="inline-flex rounded-full border border-[#deded5] bg-white p-1 dark:border-slate-700 dark:bg-slate-900"
                   role="group"
                 >
                   <button
@@ -332,7 +332,7 @@ export default function ProductsListing() {
                     aria-pressed={display === "grid"}
                     className={`rounded-md px-2.5 py-1.5 text-sm ${
                       display === "grid"
-                        ? "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300"
+                        ? "bg-[#e8eee8] text-[#315b49] dark:bg-slate-800 dark:text-[#c8dccb]"
                         : "text-slate-600 dark:text-slate-300"
                     }`}
                     onClick={() => setDisplay("grid")}
@@ -345,7 +345,7 @@ export default function ProductsListing() {
                     aria-pressed={display === "list"}
                     className={`rounded-md px-2.5 py-1.5 text-sm ${
                       display === "list"
-                        ? "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300"
+                        ? "bg-[#e8eee8] text-[#315b49] dark:bg-slate-800 dark:text-[#c8dccb]"
                         : "text-slate-600 dark:text-slate-300"
                     }`}
                     onClick={() => setDisplay("list")}

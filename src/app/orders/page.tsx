@@ -9,7 +9,7 @@ const statusStyles: Record<OrderStatus, string> = {
   pending:
     "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
   confirmed:
-    "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300",
+    "bg-[#e8eee8] text-[#315b49] dark:bg-slate-800 dark:text-[#c8dccb]",
   delivered:
     "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300",
   cancelled: "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300",
@@ -64,7 +64,7 @@ export default function OrdersPage() {
   return (
     <div className="space-y-8">
       <header>
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
           Your NeoCart purchases
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
@@ -91,7 +91,7 @@ export default function OrdersPage() {
             Your completed checkouts will appear here.
           </p>
           <Link
-            className="mt-5 inline-flex rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white hover:bg-indigo-700"
+            className="mt-5 inline-flex rounded-full bg-[#315b49] px-6 py-3 text-sm font-semibold text-white hover:bg-[#244536] dark:bg-[#a7c4ad] dark:text-[#17251c]"
             href="/products"
           >
             Start shopping
@@ -99,7 +99,7 @@ export default function OrdersPage() {
         </section>
       ) : (
         <section aria-label="Order history" className="space-y-4">
-          {orders.map((order) => {
+          {orders.map((order, index) => {
             const status = displayStatus(order.status);
             const itemCount = order.items.reduce(
               (count, item) => count + item.quantity,
@@ -108,8 +108,8 @@ export default function OrdersPage() {
 
             return (
               <article
-                className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6"
-                key={order.id}
+                className="rounded-[1.35rem] border border-[#e8e6df] bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6"
+                key={`${order.id}-${index}`}
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
@@ -153,7 +153,7 @@ export default function OrdersPage() {
                   </div>
                   <div className="col-span-2 flex items-end sm:col-span-1 sm:justify-end">
                     <Link
-                      className="text-sm font-semibold text-indigo-700 hover:underline dark:text-indigo-400"
+                      className="text-sm font-semibold text-[#315b49] hover:underline dark:text-[#a7c4ad]"
                       href={`/orders/${encodeURIComponent(order.id)}`}
                     >
                       View order <span aria-hidden="true">→</span>

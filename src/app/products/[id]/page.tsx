@@ -109,12 +109,15 @@ export default function ProductDetailPage() {
 
     setPendingAction(action);
     setNotice(undefined);
+    if (action === "buy") {
+      router.push(
+        `/checkout?buyNow=${encodeURIComponent(product.id)}&quantity=${quantity}`,
+      );
+      return;
+    }
+
     try {
       await addItem(product.id, quantity);
-      if (action === "buy") {
-        router.push("/checkout");
-        return;
-      }
       setNotice({
         kind: "success",
         text: `${quantity} ${quantity === 1 ? "item" : "items"} added to cart`,
@@ -162,7 +165,7 @@ export default function ProductDetailPage() {
   if (!product) {
     return (
       <section className="flex flex-1 flex-col items-center justify-center py-20 text-center">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
           NeoCart
         </p>
         <h1 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">
@@ -172,7 +175,7 @@ export default function ProductDetailPage() {
           This product may have been removed or the link may be incorrect.
         </p>
         <Link
-          className="mt-6 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-700"
+          className="mt-6 rounded-full bg-[#315b49] px-6 py-3 text-sm font-semibold text-white hover:bg-[#244536] dark:bg-[#a7c4ad] dark:text-[#17251c]"
           href="/products"
         >
           Browse products
@@ -202,14 +205,14 @@ export default function ProductDetailPage() {
       <nav aria-label="Breadcrumb" className="text-sm">
         <ol className="flex flex-wrap items-center gap-2 text-slate-500 dark:text-slate-400">
           <li>
-            <Link className="hover:text-indigo-700 dark:hover:text-indigo-400" href="/">
+            <Link className="hover:text-[#315b49] dark:hover:text-[#a7c4ad]" href="/">
               Home
             </Link>
           </li>
           <li aria-hidden="true">/</li>
           <li>
             <Link
-              className="hover:text-indigo-700 dark:hover:text-indigo-400"
+              className="hover:text-[#315b49] dark:hover:text-[#a7c4ad]"
               href="/products"
             >
               Products
@@ -218,7 +221,7 @@ export default function ProductDetailPage() {
           <li aria-hidden="true">/</li>
           <li>
             <Link
-              className="hover:text-indigo-700 dark:hover:text-indigo-400"
+              className="hover:text-[#315b49] dark:hover:text-[#a7c4ad]"
               href={`/products?category=${encodeURIComponent(product.category)}`}
             >
               {product.category}
@@ -232,7 +235,7 @@ export default function ProductDetailPage() {
       </nav>
 
       <section className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
-        <div className="relative aspect-square overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-900">
+        <div className="relative aspect-square overflow-hidden rounded-[1.75rem] bg-slate-100 shadow-sm dark:bg-slate-900">
           <Image
             alt={product.name}
             className="h-full w-full object-cover"
@@ -250,7 +253,7 @@ export default function ProductDetailPage() {
         </div>
 
         <div className="flex flex-col">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-indigo-600 dark:text-indigo-400">
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#6d806e] dark:text-[#a7c4ad]">
             {product.category}
           </p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
@@ -337,7 +340,7 @@ export default function ProductDetailPage() {
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <button
-              className="min-h-12 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-400 dark:disabled:bg-slate-700"
+              className="min-h-12 rounded-full bg-[#315b49] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#244536] disabled:cursor-not-allowed disabled:bg-slate-400 dark:bg-[#a7c4ad] dark:text-[#17251c] dark:hover:bg-[#c0d5c4] dark:disabled:bg-slate-700"
               disabled={!cartReady || product.stock === 0 || pendingAction !== null}
               onClick={() => void handlePurchase("cart")}
               type="button"
@@ -345,7 +348,7 @@ export default function ProductDetailPage() {
               {pendingAction === "cart" ? "Adding…" : "Add to cart"}
             </button>
             <button
-              className="min-h-12 rounded-xl border border-indigo-600 px-5 py-3 text-sm font-bold text-indigo-700 transition hover:bg-indigo-50 disabled:cursor-not-allowed disabled:border-slate-300 disabled:text-slate-400 dark:text-indigo-300 dark:hover:bg-indigo-950 dark:disabled:border-slate-700 dark:disabled:text-slate-600"
+              className="min-h-12 rounded-full border border-[#a9b9a9] px-5 py-3 text-sm font-semibold text-[#315b49] transition hover:bg-[#edf1eb] disabled:cursor-not-allowed disabled:border-slate-300 disabled:text-slate-400 dark:border-slate-600 dark:text-[#c8dccb] dark:hover:bg-slate-800 dark:disabled:border-slate-700 dark:disabled:text-slate-600"
               disabled={!cartReady || product.stock === 0 || pendingAction !== null}
               onClick={() => void handlePurchase("buy")}
               type="button"
@@ -374,7 +377,7 @@ export default function ProductDetailPage() {
         <section aria-labelledby="related-products-heading">
           <div className="mb-6 flex items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
                 More to explore
               </p>
               <h2
@@ -385,7 +388,7 @@ export default function ProductDetailPage() {
               </h2>
             </div>
             <Link
-              className="text-sm font-semibold text-indigo-700 hover:underline dark:text-indigo-400"
+              className="text-sm font-semibold text-[#315b49] hover:underline dark:text-[#a7c4ad]"
               href={`/products?category=${encodeURIComponent(product.category)}`}
             >
               View category

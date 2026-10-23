@@ -6,6 +6,7 @@ export const STORAGE_KEYS = {
   customer: "neocart:customer",
   prefs: "neocart:prefs",
   recent: "neocart:recent",
+  contactDraft: "neocart:contact-draft",
 } as const;
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

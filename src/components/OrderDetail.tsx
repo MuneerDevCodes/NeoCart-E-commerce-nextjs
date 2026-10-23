@@ -13,7 +13,7 @@ const statusStyles: Record<OrderStatus, string> = {
   pending:
     "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
   confirmed:
-    "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300",
+    "bg-[#e8eee8] text-[#315b49] dark:bg-slate-800 dark:text-[#c8dccb]",
   delivered:
     "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300",
   cancelled: "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300",
@@ -98,7 +98,7 @@ export default function OrderDetail() {
           {error || "This order could not be found."}
         </p>
         <Link
-          className="mt-6 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white hover:bg-indigo-700"
+          className="mt-6 rounded-full bg-[#315b49] px-6 py-3 text-sm font-semibold text-white hover:bg-[#244536] dark:bg-[#a7c4ad] dark:text-[#17251c]"
           href="/orders"
         >
           View your orders
@@ -140,12 +140,12 @@ export default function OrderDetail() {
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <Link
-            className="text-sm font-semibold text-indigo-700 hover:underline dark:text-indigo-400"
+            className="text-sm font-semibold text-[#315b49] hover:underline dark:text-[#a7c4ad]"
             href="/orders"
           >
             ← Your orders
           </Link>
-          <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+          <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-[#6d806e] dark:text-[#a7c4ad]">
             Order details
           </p>
           <h1 className="mt-2 break-all text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -168,7 +168,7 @@ export default function OrderDetail() {
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="space-y-6">
-          <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          <section className="rounded-[1.35rem] border border-[#e8e6df] bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">
               Items ({itemCount})
             </h2>
@@ -207,7 +207,7 @@ export default function OrderDetail() {
             </ul>
           </section>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          <section className="rounded-[1.35rem] border border-[#e8e6df] bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">
               Shipping details
             </h2>
@@ -247,7 +247,7 @@ export default function OrderDetail() {
           </section>
 
           {order.notes && (
-            <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+            <section className="rounded-[1.35rem] border border-[#e8e6df] bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                 Order notes
               </h2>
@@ -258,7 +258,7 @@ export default function OrderDetail() {
           )}
         </div>
 
-        <aside className="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-6">
+        <aside className="space-y-5 rounded-[1.35rem] border border-[#e8e6df] bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-24">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Payment & total
           </h2>

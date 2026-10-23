@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -15,6 +16,7 @@ export default function ProductCard({
   product: Product;
   layout?: "grid" | "list";
 }) {
+  const router = useRouter();
   const { addItem, isReady: cartReady } = useCart();
   const {
     isWishlisted,
@@ -38,9 +40,15 @@ export default function ProductCard({
     }
   }
 
+  function handleBuyNow() {
+    router.push(
+      `/checkout?buyNow=${encodeURIComponent(product.id)}&quantity=1`,
+    );
+  }
+
   return (
     <article
-      className={`group flex h-full overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 ${
+      className={`group flex h-full overflow-hidden rounded-[1.35rem] border border-[#e8e6df] bg-white transition duration-300 hover:-translate-y-1 hover:border-[#d8ddd4] hover:shadow-[0_18px_42px_-24px_rgba(39,53,43,0.3)] dark:border-slate-800 dark:bg-slate-900 ${
         layout === "list" ? "flex-row" : "flex-col"
       }`}
     >
@@ -48,7 +56,7 @@ export default function ProductCard({
         className={`relative overflow-hidden bg-slate-100 dark:bg-slate-800 ${
           layout === "list"
             ? "w-28 shrink-0 sm:w-44"
-            : "aspect-square"
+            : "aspect-[4/3] sm:aspect-square"
         }`}
       >
         <Link
@@ -73,7 +81,7 @@ export default function ProductCard({
         </Link>
         {product.compareAtPrice !== undefined &&
           product.compareAtPrice > product.price && (
-            <span className="absolute left-3 top-3 rounded-full bg-rose-600 px-2.5 py-1 text-xs font-bold text-white">
+            <span             className="absolute left-3 top-3 rounded-full bg-[#a34f3e] px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white">
               Sale
             </span>
           )}
@@ -84,7 +92,7 @@ export default function ProductCard({
               : `Add ${product.name} to wishlist`
           }
           aria-pressed={wishlisted}
-          className="absolute right-3 top-3 inline-flex size-10 items-center justify-center rounded-full bg-white/95 text-xl text-slate-600 shadow-sm transition hover:scale-105 hover:text-rose-600 disabled:cursor-wait dark:bg-slate-950/90 dark:text-slate-300"
+          className="absolute right-3 top-3 inline-flex size-10 items-center justify-center rounded-full border border-white/60 bg-white/90 text-xl text-slate-600 shadow-md shadow-slate-950/10 backdrop-blur transition hover:scale-105 hover:text-rose-600 disabled:cursor-wait dark:border-slate-700 dark:bg-slate-950/90 dark:text-slate-300"
           disabled={!wishlistReady}
           onClick={() => toggleWishlist(product.id)}
           type="button"
@@ -93,12 +101,12 @@ export default function ProductCard({
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+      <div className="flex flex-1 flex-col p-5">
+        <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#6d806e] dark:text-[#a7c4ad]">
           {product.category}
         </p>
         <Link
-          className="mt-1 line-clamp-2 min-h-12 text-base font-semibold text-slate-900 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-300"
+          className="mt-1 line-clamp-2 min-h-12 text-[0.98rem] font-semibold leading-6 tracking-[-0.015em] text-slate-900 hover:text-[#315b49] dark:text-white dark:hover:text-[#c8dccb]"
           href={`/products/${product.id}`}
         >
           {product.name}
@@ -116,7 +124,7 @@ export default function ProductCard({
           </span>
         </div>
         <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-lg font-bold text-slate-900 dark:text-white">
+          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             ${product.price.toFixed(2)}
           </span>
           {product.compareAtPrice !== undefined &&
@@ -127,12 +135,20 @@ export default function ProductCard({
             )}
         </div>
         <button
-          className="mt-4 w-full rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-400 dark:disabled:bg-slate-700"
+          className="mt-4 w-full rounded-full bg-[#315b49] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#244536] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#315b49] disabled:cursor-not-allowed disabled:bg-slate-400 dark:bg-[#a7c4ad] dark:text-[#17251c] dark:hover:bg-[#c0d5c4] dark:disabled:bg-slate-700"
           disabled={!cartReady || product.stock < 1 || adding}
           onClick={handleAddToCart}
           type="button"
         >
           {adding ? "Adding…" : product.stock < 1 ? "Out of stock" : "Add to cart"}
+        </button>
+        <button
+          className="mt-2 w-full rounded-full border border-[#a9b9a9] px-4 py-3 text-sm font-semibold text-[#315b49] transition hover:bg-[#edf1eb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#315b49] disabled:cursor-not-allowed disabled:border-slate-300 disabled:text-slate-400 dark:border-slate-600 dark:text-[#c8dccb] dark:hover:bg-slate-800 dark:disabled:border-slate-700 dark:disabled:text-slate-600"
+          disabled={product.stock < 1}
+          onClick={handleBuyNow}
+          type="button"
+        >
+          {product.stock < 1 ? "Out of stock" : "Buy it now"}
         </button>
         {message && (
           <p
