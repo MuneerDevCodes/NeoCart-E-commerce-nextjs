@@ -9,6 +9,7 @@ import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { clearAllDatabaseData } from "@/lib/db";
 import { removeLocalStorage, STORAGE_KEYS } from "@/lib/storage";
+import { Settings as SettingsIcon } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
@@ -39,17 +40,18 @@ export default function Navbar() {
     return undefined;
   };
 
-  const settingsButton = (
-    <button
-      aria-expanded={settingsOpen}
-      aria-haspopup="true"
-      className="inline-flex min-h-10 items-center justify-center rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
-      onClick={() => setSettingsOpen((open) => !open)}
-      type="button"
-    >
-      Settings
-    </button>
-  );
+const settingsButton = (
+  <button
+    aria-label="Settings"
+    aria-expanded={settingsOpen}
+    aria-haspopup="true"
+    className="inline-flex size-10 items-center justify-center rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+    onClick={() => setSettingsOpen((open) => !open)}
+    type="button"
+  >
+    <SettingsIcon size={18} aria-hidden="true" />
+  </button>
+);
 
   function clearSavedDetails() {
     if (!removeLocalStorage(STORAGE_KEYS.customer)) {
