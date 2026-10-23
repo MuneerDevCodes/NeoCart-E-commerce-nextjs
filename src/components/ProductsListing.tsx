@@ -13,6 +13,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import { usePrefs } from "@/context/PrefsContext";
 import { useProducts } from "@/hooks/useProducts";
+import { getProductSearchRank } from "@/lib/productSearch";
 import type { Product } from "@/types";
 
 type SortOrder = "newest" | "price-asc" | "price-desc" | "rating" | "name";
@@ -122,12 +123,9 @@ export default function ProductsListing() {
   }, [pathname, router]);
 
   const filteredProducts = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase();
     const filtered = products.filter((product) => {
       const matchesSearch =
-        !query ||
-        product.name.toLocaleLowerCase().includes(query) ||
-        product.description.toLocaleLowerCase().includes(query);
+        !search || Number.isFinite(getProductSearchRank(product, search));
       const matchesCategory = !category || product.category === category;
       const matchesMin =
         minPrice === "" ||

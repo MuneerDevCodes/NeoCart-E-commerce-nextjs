@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import ProductSearch from "@/components/ProductSearch";
 import { useCart } from "@/context/CartContext";
 import { usePrefs } from "@/context/PrefsContext";
 import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
@@ -96,11 +97,43 @@ export default function Navbar() {
     <header className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link
-          className="text-2xl font-bold tracking-tight text-indigo-700"
+          aria-label="NeoCart home"
+          className="group inline-flex shrink-0 items-center gap-2.5 rounded-xl text-[#315b49] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#315b49] dark:text-[#bfd0ba]"
           href="/"
           onClick={() => setMenuOpen(false)}
         >
-          NeoCart
+          <span className="relative grid size-10 place-items-center rounded-[0.9rem] bg-[#315b49] text-white shadow-lg shadow-[#315b49]/20 transition duration-300 group-hover:-rotate-3 group-hover:scale-105 group-hover:shadow-[#315b49]/35 dark:bg-[#a7c4ad] dark:text-[#17251c]">
+            <svg
+              aria-hidden="true"
+              className="size-6 transition-transform duration-500 group-hover:rotate-6"
+              fill="none"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M5.5 13.5 16 5l10.5 8.5v12a1.5 1.5 0 0 1-1.5 1.5H7a1.5 1.5 0 0 1-1.5-1.5v-12Z"
+                stroke="currentColor"
+                strokeLinejoin="round"
+                strokeWidth="1.8"
+              />
+              <path
+                d="M12 27v-8.5a4 4 0 0 1 8 0V27M4 14l12-9 12 9"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.8"
+              />
+              <circle cx="23.5" cy="8.5" r="1.4" fill="#d7bd83" />
+            </svg>
+            <span className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-[#d7bd83] ring-2 ring-white transition-transform duration-300 group-hover:scale-125 dark:ring-slate-900" />
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="text-[1.35rem] font-bold tracking-[-0.055em] text-slate-900 dark:text-white">
+              NeoCart<span className="text-[#a78349]">.</span>
+            </span>
+            <span className="mt-1 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[#718173] dark:text-[#a7c4ad]">
+              Thoughtful finds
+            </span>
+          </span>
         </Link>
 
         <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
@@ -136,6 +169,10 @@ export default function Navbar() {
             {menuOpen ? "×" : "☰"}
           </button>
         </div>
+      </div>
+
+      <div className="border-t border-slate-100 px-4 py-3 dark:border-slate-800 sm:px-6 lg:px-8">
+        <ProductSearch />
       </div>
 
       {menuOpen && (
